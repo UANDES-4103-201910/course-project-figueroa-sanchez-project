@@ -1,0 +1,2 @@
+class ProfilePhoto < ApplicationRecord
+end

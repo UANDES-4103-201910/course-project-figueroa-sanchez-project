@@ -1,0 +1,2 @@
+class AdminLocation < ApplicationRecord
+end

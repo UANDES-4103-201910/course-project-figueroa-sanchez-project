@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @admin_location.user %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @admin_location.location %>
+</p>
+
+<%= link_to 'Edit', edit_admin_location_path(@admin_location) %> |
+<%= link_to 'Back', admin_locations_path %>

@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Black Lists</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @black_lists.each do |black_list| %>
+      <tr>
+        <td><%= black_list.user %></td>
+        <td><%= link_to 'Show', black_list %></td>
+        <td><%= link_to 'Edit', edit_black_list_path(black_list) %></td>
+        <td><%= link_to 'Destroy', black_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Black List', new_black_list_path %>

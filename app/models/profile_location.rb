@@ -1,0 +1,2 @@
+class ProfileLocation < ApplicationRecord
+end

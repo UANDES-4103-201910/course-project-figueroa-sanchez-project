@@ -1,0 +1,2 @@
+class Dumpster < ApplicationRecord
+end

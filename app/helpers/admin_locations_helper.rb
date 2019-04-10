@@ -1,0 +1,2 @@
+module AdminLocationsHelper
+end
