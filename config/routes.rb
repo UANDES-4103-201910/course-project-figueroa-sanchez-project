@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :attachments
+  root :to => 'home#home'
   resources :admin_black_lists
   resources :user_roles
   resources :roles
@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :validations
   resources :shared_posts
   resources :dumpsters
+  resources :attachments
   resources :posts
   resources :profile_photos
   resources :profile_locations
