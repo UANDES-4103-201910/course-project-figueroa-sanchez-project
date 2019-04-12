@@ -1,0 +1,2 @@
+module AdminBlackListsHelper
+end

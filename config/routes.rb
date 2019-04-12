@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :admin_black_lists
   resources :user_roles
   resources :roles
   resources :black_lists

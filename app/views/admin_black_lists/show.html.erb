@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Black list:</strong>
+  <%= @admin_black_list.black_list %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @admin_black_list.user %>
+</p>
+
+<%= link_to 'Edit', edit_admin_black_list_path(@admin_black_list) %> |
+<%= link_to 'Back', admin_black_lists_path %>
