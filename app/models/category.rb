@@ -1,3 +1,3 @@
 class Category < ApplicationRecord
-  belongs_to :attachment
+  has_one :attachment
 end

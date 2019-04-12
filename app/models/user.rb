@@ -6,7 +6,8 @@ class User < ApplicationRecord
   has_many :posts
   has_one :profile
   has_many :reports
-  has_one :user_role
+  has_many :user_role
   has_many :user_passwords
   has_many :validations
+  has_many :roles, through: :user_role
 end

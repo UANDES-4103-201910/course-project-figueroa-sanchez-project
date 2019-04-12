@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_12_153449) do
+ActiveRecord::Schema.define(version: 2019_04_12_174806) do
 
   create_table "admin_black_lists", force: :cascade do |t|
     t.integer "black_list_id"
@@ -31,10 +31,12 @@ ActiveRecord::Schema.define(version: 2019_04_12_153449) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer "category_id"
+    t.integer "post_id"
     t.string "link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_attachments_on_category_id"
+    t.index ["post_id"], name: "index_attachments_on_post_id"
   end
 
   create_table "black_lists", force: :cascade do |t|

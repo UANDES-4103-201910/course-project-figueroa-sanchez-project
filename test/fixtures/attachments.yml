@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  category: 
+  category: one
+  post: one
   link: MyString
 
 two:
-  category: 
+  category: two
+  post: two
   link: MyString
