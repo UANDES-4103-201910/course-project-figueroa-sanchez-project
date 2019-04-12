@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root :to => 'home#home'
   resources :admin_black_lists
   resources :user_roles
   resources :roles
