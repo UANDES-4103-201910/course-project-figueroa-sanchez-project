@@ -18,5 +18,5 @@ class User < ApplicationRecord
   has_many :user_passwords
   has_many :validations
   has_many :roles, through: :user_role
-  validates :email, presence: true, email: true
+  validates :mail, presence: true, email: true
 end
