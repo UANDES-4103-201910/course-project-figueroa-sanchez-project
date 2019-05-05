@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+
   end
 
   # POST /users
@@ -68,4 +69,6 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:mail, :is_active)
     end
+
+  
 end

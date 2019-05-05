@@ -69,4 +69,16 @@ end
 for i in 1..8
   Post.create!(user_id:i, title:"post#{i+8}", description:"description#{i}")
 end
+
+votes_types = [true,false]
+
+for _ in 1..30
+  random_user = Random.rand(1..8)
+  random_post = Random.rand(1..16)
+  if Validation.where(user_id: random_user, post_id: random_post).length == 0
+    Validation.create!(user_id:random_user, post_id:random_post, vote:votes_types[Random.rand(0..1)])
+  end
+end
+
+
 #TODO: Populate with attachments and other optional post elements
