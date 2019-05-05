@@ -11,11 +11,13 @@ Rails.application.routes.draw do
   resources :shared_posts
   resources :dumpsters
   resources :attachments
-  resources :posts
   resources :profile_photos
   resources :profile_locations
   resources :profiles
   resources :user_passwords
-  resources :users
+  defaults format: :json do
+    resources :users, :posts
+  end
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
