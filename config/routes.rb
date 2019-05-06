@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'searcher/index'
+  get 'login/index'
   root :to => 'home#home'
   resources :admin_black_lists
   resources :user_roles
@@ -17,5 +19,7 @@ Rails.application.routes.draw do
   resources :profiles
   resources :user_passwords
   resources :users
+  resources :login
+  resources :searcher
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
