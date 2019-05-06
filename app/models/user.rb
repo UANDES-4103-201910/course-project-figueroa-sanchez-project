@@ -18,5 +18,23 @@ class User < ApplicationRecord
   has_many :user_passwords
   has_many :validations
   has_many :roles, through: :user_role
-  validates :email, presence: true, email: true
+  validates :mail, presence: true, uniqueness: true
+
+
+  def self.users_by_roles
+    user_roles = UserRole.all
+    all_users = User.all
+    normal_users = Array.new
+    administrators = Array.new
+    superadmin = User.where(id:user_roles.where(role_id: 3))
+    user_roles.where(role_id:1).each do |user_role|
+      normal_users << all_users.where(id:user_role.user_id)
+    end
+    user_roles.where(role_id:2).each do |user_role|
+      administrators << all_users.where(id:user_role.user_id)
+    end
+    return normal_users, administrators, superadmin
+  end
 end
+
+# User.users_by_roles
