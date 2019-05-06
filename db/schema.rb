@@ -167,7 +167,7 @@ ActiveRecord::Schema.define(version: 2019_04_12_174806) do
   create_table "validations", force: :cascade do |t|
     t.integer "user_id"
     t.integer "post_id"
-    t.boolean "vote"
+    t.integer "vote"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_validations_on_post_id"

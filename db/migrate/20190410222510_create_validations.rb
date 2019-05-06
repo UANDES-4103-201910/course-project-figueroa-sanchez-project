@@ -3,7 +3,7 @@ class CreateValidations < ActiveRecord::Migration[5.2]
     create_table :validations do |t|
       t.references :user
       t.references :post
-      t.boolean :vote
+      t.integer :vote
 
       t.timestamps
     end

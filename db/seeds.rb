@@ -70,7 +70,7 @@ for i in 1..8
   Post.create!(user_id:i, title:"post#{i+8}", description:"description#{i}")
 end
 
-votes_types = [true,false]
+votes_types = [-1,1]
 
 for _ in 1..30
   random_user = Random.rand(1..8)
