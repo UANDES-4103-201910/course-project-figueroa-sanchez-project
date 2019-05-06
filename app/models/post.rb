@@ -56,6 +56,11 @@ class Post < ApplicationRecord
   def get_reports
     reports = Report.where(post_id: id)
   end
+
+  def get_user_photo
+    user = User.find(user_id)
+    user.get_actual_photo
+  end
 end
 
 #Post.get_posts_ordered_by_votes

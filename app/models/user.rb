@@ -35,6 +35,14 @@ class User < ApplicationRecord
     end
     return normal_users, administrators, superadmin
   end
+
+  def get_actual_photo
+    user_profile_id = Profile.where(user_id: id).id
+    actual_profile_photo = ProfilePhoto.where(profile_id: user_profile_id)
+                                       .order(created_at: :desc)
+                                       .limit(1).photo_link
+
+  end
 end
 
 # User.users_by_roles
