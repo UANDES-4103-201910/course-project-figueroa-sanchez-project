@@ -4,6 +4,7 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.references :user
       t.string :title
       t.text :description
+      t.boolean :solved
 
       t.timestamps
     end

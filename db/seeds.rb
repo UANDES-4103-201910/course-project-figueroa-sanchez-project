@@ -63,11 +63,11 @@ for  i in 9..13
 end
 
 for i in 1..8
-  Post.create!(user_id:i, title:"post#{i}", description:"description#{i}")
+  Post.create!(user_id:i, title:"post#{i}", description:"description#{i}", solved:true)
 end
 
 for i in 1..8
-  Post.create!(user_id:i, title:"post#{i+8}", description:"description#{i}")
+  Post.create!(user_id:i, title:"post#{i+8}", description:"description#{i}", solved:false)
 end
 
 votes_types = [-1,1]

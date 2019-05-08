@@ -62,5 +62,3 @@ class Post < ApplicationRecord
     user.get_actual_photo
   end
 end
-
-#Post.get_posts_ordered_by_votes

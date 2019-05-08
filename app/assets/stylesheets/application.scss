@@ -14,3 +14,23 @@
  */
 @import "bootstrap";
 
+.btn-outline-warning{
+  color: #FFA500;
+}
+
+.btn-outline-warning {
+  border-color: #FFA500;
+}
+
+.btn-outline-warning:hover {
+  color: #212529;
+  background-color: #FFA500;
+  border-color: #FFA500;
+}
+body{
+  background-color: #F7F7F7;
+}
+
+.jumbotron{
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+}

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'change_password/index'
+  get 'recover_password/index'
   get 'profile_view/index'
   get 'searcher/index'
   get 'login/index'
