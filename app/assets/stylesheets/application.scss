@@ -13,6 +13,7 @@
 
  */
 @import "bootstrap";
+@import "font-awesome";
 
 .btn-outline-warning{
   color: #FFA500;
@@ -29,6 +30,7 @@
 }
 body{
   background-color: #e9ecef;
+  position: relative;
 }
 
 .jumbotron{
@@ -36,6 +38,9 @@ body{
   background-color: #F7F7F7;
 }
 
-footer{
-  background-color: #FFFFFF;
+footer {
+  background-color: white;
+  width: 100vw;
+  height: 200px;
+  bottom: 0;
 }
