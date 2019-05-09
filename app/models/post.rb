@@ -13,7 +13,7 @@ class Post < ApplicationRecord
     posts_ordered_by_votes = Array.new
     posts_with_validations.keys.sort_by { |key| posts_with_validations[key] }.each do
     |key|
-      posts_ordered_by_votes << Post.find(key)
+      posts_ordered_by_votes << Post.find(key).id
     end
     posts_ordered_by_votes.reverse
     posts_ordered_by_votes
