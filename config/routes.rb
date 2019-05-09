@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'post_view/index'
+  get 'report_post/:id', to: 'report_post#index'
+  get 'post_view/:id', to: 'post_view#index'
   get 'post_view/post'
   get 'registration/index'
   get 'change_password/index'
