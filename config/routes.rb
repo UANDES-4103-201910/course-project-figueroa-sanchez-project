@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'post_view/index'
+  get 'post_view/post'
   get 'registration/index'
   get 'change_password/index'
   get 'recover_password/index'
@@ -17,6 +19,7 @@ Rails.application.routes.draw do
   resources :login
   resources :searcher
   resources :profile_view
+  resources :post_view
   defaults format: :json do
     resources :users, :posts
   end
