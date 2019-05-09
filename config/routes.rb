@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'profile_view/index'
   get 'searcher/index'
   get 'login/index'
   root :to => 'home#home'
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
   resources :users
   resources :login
   resources :searcher
+  resources :profile_view
   defaults format: :json do
     resources :users, :posts
   end
