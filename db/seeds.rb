@@ -97,4 +97,14 @@ Report.create(user_id:1, post_id:3, report_category_id:2, comment:"Reportcomment
 Report.create(user_id:2, post_id:2, report_category_id:3, comment:"Reportcomment3")
 Report.create(user_id:2, post_id:3, report_category_id:4, comment:"Reportcomment4")
 Report.create(user_id:3, post_id:3, report_category_id:5, comment:"Reportcomment5")
+Report.create(user_id:5, post_id:3, report_category_id:1, comment:"Reportcomment1")
+Report.create(user_id:4, post_id:2, report_category_id:2, comment:"Reportcomment2")
+Report.create(user_id:2, post_id:6, report_category_id:3, comment:"Reportcomment3")
+Report.create(user_id:2, post_id:6, report_category_id:4, comment:"Reportcomment4")
+Report.create(user_id:3, post_id:6, report_category_id:5, comment:"Reportcomment5")
+
+Dumpster.create(post_id:3)
+Dumpster.create(post_id:2)
+Dumpster.create(post_id:6)
+
 #TODO: Populate with attachments and other optional post elements

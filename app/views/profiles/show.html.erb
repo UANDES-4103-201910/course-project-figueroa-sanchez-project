@@ -1,34 +1,77 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= @profile.user %>
-</p>
+<div class="container">
+  <p></p>
+  <div class="row">
+    <div class="col-sm-4">
 
-<p>
-  <strong>First name:</strong>
-  <%= @profile.first_name %>
-</p>
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="col-md-4  d-flex align-items-center">
+            <img src="https://cdn.iconverticons.com/files/png/c09db90b332587ca_128x128.png" class="avatar img-circle img-thumbnail" alt="avatar">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h6 class="card-title"><%=@profile.first_name%> </h6>
+              <h6 class="card-title"><%=@profile.last_name%> </h6>
+              <br>
+              <p class="card-text"><%=@profile.bio %></p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @profile.last_name %>
-</p>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <h6><b><u>Birthday</u></b></h6>
+          10/12/1996
+        </li>
+        <li class="list-group-item">
+          <h6><b><u>Email</u></b></h6>
+          <%= @user.mail %>
+        </li>
+        <li class="list-group-item">
+          <h6><b><u>Country</u></b></h6>
+          <%= @profile.country %>
+        </li>
+        <li class="list-group-item">
+          <h6><b><u>City</u></b></h6>
+          <%=@profile.city %>
 
-<p>
-  <strong>Bio:</strong>
-  <%= @profile.bio %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @profile.country %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @profile.city %>
-</p>
-
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
-<%= link_to 'Back', profiles_path %>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-8" >
+      <div class="container justify-content-xl-center">
+        <ul class="list-group ">
+          <% @posts.each do |post| %>
+            <li class="list-group-item">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <img src="https://cdn.iconverticons.com/files/png/c09db90b332587ca_32x32.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                      <a href="#">
+                        <%= @profile.first_name %>
+                      </a>
+                    </div>
+                    <div class="col-md-2 text-center">
+                      <small><%=post.created_at.to_date %></small>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body text-left">
+                  <h5 class="card-title"><%=post.title %></h5>
+                  <p class="card-text"><%=post.description %></p>
+                </div>
+                <div class="card-footer">
+                  <a href="#" class="btn btn-dark">Comments</a>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p></p>
+</div>
