@@ -1,0 +1,2 @@
+module SuperAdminHomeHelper
+end
