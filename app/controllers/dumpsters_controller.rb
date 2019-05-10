@@ -9,6 +9,7 @@ class DumpstersController < ApplicationController
     dumpsters.each do |dumped|
       dumped_post = Hash.new
       post = Post.find(dumped.post_id)
+      dumped_post["id"] = post.id
       dumped_post["title"] = post.title
       dumped_post["author"] = post.author
       dumped_post["dumped_date"] = dumped.created_at
