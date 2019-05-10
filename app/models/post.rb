@@ -39,7 +39,9 @@ class Post < ApplicationRecord
 
   def get_votes
     votes = Validation.where(post_id: id).group(:vote).count
-    votes_hash = {"up": votes[1], "down":votes[-1]}
+    votes_hash = Hash.new
+    votes_hash["up"] = votes[1]
+    votes_hash["down"] = votes[-1]
     votes_hash
   end
 
