@@ -4,6 +4,16 @@ class Comment < ApplicationRecord
 
   def self.get_post_comments(id)
     post_comments = Comment.where(post_id: id)
+    comments = Array.new
+    post_comments.each do |comm|
+      user_comment = Hash.new
+      user_comment["user_first_name"] = Profile.find(comm.user_id).first_name
+      user_comment["user_last_name"] = Profile.find(comm.user_id).last_name
+      user_comment["text"] = comm.comment
+      user_comment["date"] = comm.created_at.to_date
+      comments << user_comment
+    end
+    comments
   end
 
   def get_user_photo
