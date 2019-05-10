@@ -13,6 +13,11 @@ class ProfilesController < ApplicationController
     @profile = Profile.where(user_id:params[:id]).first
     @user = User.find(params[:id])
     @posts = Post.where(user_id: params[:id]).order(created_at: :desc)
+    @votes = Hash.new
+    @posts.each do |post|
+      @votes[post.id] = post.get_votes
+    end
+
   end
 
   # GET /profiles/new

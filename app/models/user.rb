@@ -57,6 +57,15 @@ class User < ApplicationRecord
     admins
   end
 
+  def get_geofences
+    geofences_raw = AdminLocation.where(user_id:id)
+    geofences = Array.new
+    geofences_raw.each do |geo|
+      geofences << geo.location
+    end
+    geofences
+  end
+
 
 end
 

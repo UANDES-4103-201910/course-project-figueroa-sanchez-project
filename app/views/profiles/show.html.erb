@@ -22,10 +22,6 @@
 
       <ul class="list-group">
         <li class="list-group-item">
-          <h6><b><u>Birthday</u></b></h6>
-          10/12/1996
-        </li>
-        <li class="list-group-item">
           <h6><b><u>Email</u></b></h6>
           <%= @user.mail %>
         </li>
@@ -65,7 +61,9 @@
                       <h5 class="card-title"><%=post.title %></h5>
                     </div>
                     <div class="col-md-2 text-center">
-                      <i class="fas fa-check fa-2x"></i>
+                      <%if post.solved %>
+                        <i class="fas fa-check fa-2x"></i>
+                      <% end %>
                     </div>
                   </div>
                   <div class="row">
@@ -81,11 +79,11 @@
                         <a href="#" class="btn btn-dark">Comments</a>
                       </div>
                       <div class="col-sm-4 text-right">
-                        89
+                        <%=@votes[post.id]["up"] %>
                         <a class="btn">
                           <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
                         </a>
-                        32
+                        <%=@votes[post.id]["down"] %>
                         <a class="btn">
                           <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
                         </a>

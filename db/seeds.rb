@@ -114,4 +114,14 @@ Dumpster.create(post_id:3)
 Dumpster.create(post_id:2)
 Dumpster.create(post_id:6)
 
+AdminLocation.create(user_id:9, location:"Chile")
+AdminLocation.create(user_id:9, location:"Colombia")
+AdminLocation.create(user_id:9, location:"Peru")
+
+AdminLocation.create(user_id:10, location:"Germany")
+AdminLocation.create(user_id:10, location:"France")
+AdminLocation.create(user_id:10, location:"Italy")
+AdminLocation.create(user_id:11, location:"Japan")
+AdminLocation.create(user_id:11, location:"China")
+AdminLocation.create(user_id:11, location:"South korea")
 #TODO: Populate with attachments and other optional post elements
