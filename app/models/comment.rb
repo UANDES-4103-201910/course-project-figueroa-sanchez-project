@@ -7,6 +7,7 @@ class Comment < ApplicationRecord
     comments = Array.new
     post_comments.each do |comm|
       user_comment = Hash.new
+      user_comment['user_profile_id'] = Profile.find(comm.user_id).id
       user_comment["user_first_name"] = Profile.find(comm.user_id).first_name
       user_comment["user_last_name"] = Profile.find(comm.user_id).last_name
       user_comment["text"] = comm.comment
