@@ -5,13 +5,13 @@ class HomeController < ApplicationController
     top_5_posts_raw = all_posts[0..4]
     @top_20_post = Array.new
     @top_5_post = Array.new
-    top_20_posts_raw.each do |post|
-      @top_20_post << Post.get_post(post.id)
-    end
+    #top_20_posts_raw.each do |post|
+    #  @top_20_post << Post.get_post(post.id)
+    #end
 
-    top_5_posts_raw.each do |post|
-      @top_5_post << Post.get_post(post.id)
-    end
+    #top_5_posts_raw.each do |post|
+    #  @top_5_post << Post.get_post(post.id)
+    #end
 
     @top_20_post
     @top_5_post
