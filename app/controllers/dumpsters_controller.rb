@@ -4,7 +4,17 @@ class DumpstersController < ApplicationController
   # GET /dumpsters
   # GET /dumpsters.json
   def index
-    @dumpsters = Dumpster.all
+    dumpsters = Dumpster.all
+    @dumped_posts = Array.new
+    dumpsters.each do |dumped|
+      dumped_post = Hash.new
+      post = Post.find(dumped.post_id)
+      dumped_post["title"] = post.title
+      dumped_post["author"] = post.author
+      dumped_post["dumped_date"] = dumped.created_at
+      dumped_post["creation_date"] = post.created_at
+      @dumped_posts << dumped_post
+    end
   end
 
   # GET /dumpsters/1
