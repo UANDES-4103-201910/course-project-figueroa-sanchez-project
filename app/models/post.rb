@@ -33,6 +33,10 @@ class Post < ApplicationRecord
     posts_by_validation
   end
 
+  def author
+     author = User.find(user_id).mail
+  end
+
   def get_votes
     votes = Validation.where(post_id: id).group(:vote).count
     votes_hash = {"up": votes[1], "down":votes[-1]}
@@ -84,8 +88,8 @@ class Post < ApplicationRecord
     post_info["description"] = post.description
     post_info["solved"] = post.solved
     post_info["date"] = post.created_at
-    comment["user_first_name"] = Profile.find(post.user_id).first_name
-    comment["user_last_name"] = Profile.find(post.user_id).last_name
+    post_info["user_first_name"] = Profile.find(post.user_id).first_name
+    post_info["user_last_name"] = Profile.find(post.user_id).last_name
     post_info
   end
 
