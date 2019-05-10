@@ -60,11 +60,37 @@
                   </div>
                 </div>
                 <div class="card-body text-left">
-                  <h5 class="card-title"><%=post.title %></h5>
-                  <p class="card-text"><%=post.description %></p>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <h5 class="card-title"><%=post.title %></h5>
+                    </div>
+                    <div class="col-md-2 text-center">
+                      <i class="fas fa-check fa-2x"></i>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p class="card-text"><%=post.description %></p>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="card-footer">
-                  <a href="#" class="btn btn-dark">Comments</a>
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <a href="#" class="btn btn-dark">Comments</a>
+                      </div>
+                      <div class="col-sm-4 text-right">
+                        89
+                        <a class="btn">
+                          <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
+                        </a>
+                        32
+                        <a class="btn">
+                          <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
+                        </a>
+                      </div>
+                    </div>
                 </div>
               </div>
             </li>
