@@ -80,5 +80,21 @@ for _ in 1..30
   end
 end
 
+for id in 5..8
+  BlackList.create(user_id:8)
+end
+AdminBlackList.create(black_list_id:1, user_id:9)
+AdminBlackList.create(black_list_id:3, user_id:11)
 
+ReportCategory.create(name:"Inappropiate content")
+ReportCategory.create(name:"Spam")
+ReportCategory.create(name:"Personal advertising")
+ReportCategory.create(name:"Sexual harassment")
+ReportCategory.create(name:"Other")
+
+Report.create(user_id:1, post_id:2, report_category_id:1, comment:"Reportcomment1")
+Report.create(user_id:1, post_id:3, report_category_id:2, comment:"Reportcomment2")
+Report.create(user_id:2, post_id:2, report_category_id:3, comment:"Reportcomment3")
+Report.create(user_id:2, post_id:3, report_category_id:4, comment:"Reportcomment4")
+Report.create(user_id:3, post_id:3, report_category_id:5, comment:"Reportcomment5")
 #TODO: Populate with attachments and other optional post elements

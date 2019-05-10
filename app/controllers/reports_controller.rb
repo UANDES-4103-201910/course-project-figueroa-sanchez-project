@@ -4,7 +4,18 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.all
+    reported_posts = Report.get_reported_posts
+    @reports = Array.new
+    reported_posts.each do |post|
+      report = Hash.new
+      report["post_title"] = post.title
+      report["author"] = post.get_user_mail
+      report["date"] = post.created_at
+      report["reports"] = post.get_reports
+      report["reports_count"] = post.count_reports
+      report["post_id"] = post.id.to_s
+      @reports << report
+    end
   end
 
   # GET /reports/1

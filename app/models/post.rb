@@ -13,7 +13,7 @@ class Post < ApplicationRecord
     posts_ordered_by_votes = Array.new
     posts_with_validations.keys.sort_by { |key| posts_with_validations[key] }.each do
     |key|
-      posts_ordered_by_votes << Post.find(key).id
+      posts_ordered_by_votes << Post.find(key)
     end
     posts_ordered_by_votes.reverse
     posts_ordered_by_votes
@@ -57,7 +57,18 @@ class Post < ApplicationRecord
   end
 
   def get_reports
-    reports = Report.where(post_id: id)
+    reports_raw = Report.where(post_id: id)
+    reports = Array.new
+    reports_raw.each do |report|
+      report_d = Hash.new
+      report_d["category"] = ReportCategory.find(report.report_category_id).name
+      report_d["author"] = User.find(report.user_id).mail
+      report_d["comment"] = report.comment
+    end
+  end
+
+  def get_user_mail
+    user_mail = User.find(user_id).mail
   end
 
   def get_user_photo
@@ -89,7 +100,6 @@ class Post < ApplicationRecord
       comment["user_last_name"] = Profile.find(item.user_id).last_name
       comment["text"] = item.comment
       comment["date"] = item.created_at
-
       comments << comment
     end
     comments

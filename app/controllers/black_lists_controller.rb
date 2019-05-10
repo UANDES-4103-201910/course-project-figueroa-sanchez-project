@@ -4,7 +4,29 @@ class BlackListsController < ApplicationController
   # GET /black_lists
   # GET /black_lists.json
   def index
-    @black_lists = BlackList.all
+    black_list_raw = BlackList.all
+    @black_list = Array.new
+    black_list_admin = AdminBlackList.all
+    admins_mails = User.get_admins_mails
+
+    black_list_raw.each do |item|
+      user = User.find(item.user_id)
+      author = black_list_admin.where(black_list_id: item.id)
+
+      profile = Profile.where(user_id: item.user_id).first
+      black_item = Hash.new
+      black_item["first_name"] = profile.first_name
+      black_item["last_name"] = profile.last_name
+      black_item["email"] = user.mail
+      black_item["is_active"] = user.is_active
+      if author.length != 0
+        black_item["author"] = admins_mails[author.first.user_id]
+      else
+        black_item["author"] = ""
+      end
+      @black_list << black_item
+    end
+
   end
 
   # GET /black_lists/1

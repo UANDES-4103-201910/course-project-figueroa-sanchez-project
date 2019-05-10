@@ -43,6 +43,21 @@ class User < ApplicationRecord
                                        .limit(1).photo_link
 
   end
+
+  def get_role
+    role = UserRole.where(user_id:id).first.role_id
+  end
+
+  def self.get_admins_mails
+    admins_ids = UserRole.where(role_id: 2)
+    admins = Hash.new
+    admins_ids.each do |role|
+      admins[role.id] = User.find(role.id).mail
+    end
+    admins
+  end
+
+
 end
 
 # User.users_by_roles
