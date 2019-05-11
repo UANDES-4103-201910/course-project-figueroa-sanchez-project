@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   resources :searcher
   resources :profile_view
   resources :post_view
-  resources :recover_password
   defaults format: :json do
     resources :users, :posts
   end
