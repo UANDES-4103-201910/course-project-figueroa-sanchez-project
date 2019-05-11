@@ -26,7 +26,6 @@ class BlackListsController < ApplicationController
       end
       @black_list << black_item
     end
-
   end
 
   # GET /black_lists/1
