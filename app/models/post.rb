@@ -93,6 +93,7 @@ class Post < ApplicationRecord
     post_info["user_first_name"] = Profile.find(post.user_id).first_name
     post_info["user_last_name"] = Profile.find(post.user_id).last_name
     post_info['votes'] = post.get_votes
+    post_info['total_votes'] = Post.get_posts_votes[post.id]
     post_info
   end
 

@@ -40,11 +40,11 @@
                 <h6>Comments</h6>
               </div>
               <div class="col-sm-4 text-right">
-                <% @post['votes']['up'] %>
+                <%= @post['votes']['up'] %>
                 <a class="btn">
                   <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
                 </a>
-                32
+                <%= @post['votes']['down'] %>
                 <a class="btn">
                   <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
                 </a>
@@ -59,10 +59,12 @@
           <div class="media mt-3">
             <img src="https://cdn.iconverticons.com/files/png/c09db90b332587ca_64x64.png" class="mr-3" alt="...">
             <div class="media-body">
-              <h5 class="mt-0"><%= comment["user_first_name"] + ' ' + comment['user_last_name'] %></h5>
+              <a href="/profiles/<%= comment['user_profile_id'] %>">
+                <h6 class="mt-0"><%= comment["user_first_name"] %> <%= comment["user_last_name"] %> </h6>
+              </a>
               <%= comment["text"] %>
             </div>
-            <small><% comment['date'] %></small>
+            <small><%= comment['date'] %></small>
           </div>
         </div>
       </li>
