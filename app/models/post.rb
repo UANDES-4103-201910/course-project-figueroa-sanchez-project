@@ -87,9 +87,10 @@ class Post < ApplicationRecord
     post_info["title"] = post.title
     post_info["description"] = post.description
     post_info["solved"] = post.solved
-    post_info["date"] = post.created_at
+    post_info["date"] = post.created_at.to_date
     post_info["user_first_name"] = Profile.find(post.user_id).first_name
     post_info["user_last_name"] = Profile.find(post.user_id).last_name
+    post_info['votes'] = post.get_votes
     post_info
   end
 
