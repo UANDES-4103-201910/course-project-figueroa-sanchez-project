@@ -70,6 +70,13 @@ for i in 1..8
   Post.create!(user_id:i, title:"post#{i+8}", description:"description#{i}", solved:false)
 end
 
+for postid in 1..16
+  for userid in 1..8
+    Comment.create(user_id:userid, post_id:postid, comment:"Comentnumber#{postid+userid}")
+  end
+end
+
+
 votes_types = [-1,1]
 
 for _ in 1..30
@@ -81,7 +88,7 @@ for _ in 1..30
 end
 
 for id in 5..8
-  BlackList.create(user_id:8)
+  BlackList.create(user_id:id)
 end
 AdminBlackList.create(black_list_id:1, user_id:9)
 AdminBlackList.create(black_list_id:3, user_id:11)
