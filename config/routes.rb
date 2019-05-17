@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks'}
   get 'admin_list/', to:'admin_list#index'
   get 'super_admin_home/', to: 'super_admin_home#index'
   get 'admin_home/', to: 'admin_home#index'

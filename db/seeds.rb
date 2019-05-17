@@ -14,19 +14,19 @@ Category.create!(name: "Location")
 Role.create!(name: "normal_user", description: "Interacts with the application and doesn't manages it") #id:1
 Role.create!(name:"administrator", description: "Manages the application") #id:2
 Role.create!(name:"super_administrator", description:"Manages the administrator accounts") #id:3
-User.create!(mail: "activeNormalUser1@gmail.com", is_active:true) #Id:1
-User.create!(mail: "activeNormalUser2@gmail.com", is_active:true) #Id:2
-User.create!(mail: "activeNormalUser3@gmail.com", is_active:true) #Id:3
-User.create!(mail: "activeNormalUser4@gmail.com", is_active:true) #Id:4
-User.create!(mail: "bannedNormalUser1@gmail.com", is_active:false) #Id:5
-User.create!(mail: "bannedNormalUser2@gmail.com", is_active:false) #Id:6
-User.create!(mail: "bannedNormalUser3@gmail.com", is_active:false) #Id:7
-User.create!(mail: "bannedNormalUser4@gmail.com", is_active:false) #Id:8
-User.create!(mail: "activeAdministrator1@gmail.com", is_active:true) #Id:9
-User.create!(mail: "activeAdministrator2@gmail.com", is_active:true) #Id:10
-User.create!(mail: "activeAdministrator3@gmail.com", is_active:true) #Id:11
-User.create!(mail: "activeAdministrator4@gmail.com", is_active:true) #Id:12
-User.create!(mail: "activeSuperAdministrator1@gmail.com", is_active:true) #Id:13
+User.create!(email: "activeNormalUser1@gmail.com", password:"password1", is_active:true) #Id:1
+User.create!(email: "activeNormalUser2@gmail.com", password:"password2", is_active:true) #Id:2
+User.create!(email: "activeNormalUser3@gmail.com", password:"password3", is_active:true) #Id:3
+User.create!(email: "activeNormalUser4@gmail.com", password:"password4", is_active:true) #Id:4
+User.create!(email: "bannedNormalUser1@gmail.com", password:"password5", is_active:false) #Id:5
+User.create!(email: "bannedNormalUser2@gmail.com", password:"password6", is_active:false) #Id:6
+User.create!(email: "bannedNormalUser3@gmail.com", password:"password7", is_active:false) #Id:7
+User.create!(email: "bannedNormalUser4@gmail.com", password:"password8", is_active:false) #Id:8
+User.create!(email: "activeAdministrator1@gmail.com", password:"password9", is_active:true) #Id:9
+User.create!(email: "activeAdministrator2@gmail.com", password:"password10", is_active:true) #Id:10
+User.create!(email: "activeAdministrator3@gmail.com", password:"password11", is_active:true) #Id:11
+User.create!(email: "activeAdministrator4@gmail.com", password:"password12", is_active:true) #Id:12
+User.create!(email: "activeSuperAdministrator1@gmail.com", password:"password13", is_active:true) #Id:13
 UserRole.create!(role_id: 1, user_id: 1)
 UserRole.create!(role_id: 1, user_id: 2)
 UserRole.create!(role_id: 1, user_id: 3)
@@ -40,19 +40,6 @@ UserRole.create!(role_id: 2, user_id: 10)
 UserRole.create!(role_id: 2, user_id: 11)
 UserRole.create!(role_id: 2, user_id: 12)
 UserRole.create!(role_id: 3, user_id: 13)
-UserPassword.create!(user_id:1, password:"password1")
-UserPassword.create!(user_id:2, password:"password2")
-UserPassword.create!(user_id:3, password:"password3")
-UserPassword.create!(user_id:4, password:"password4")
-UserPassword.create!(user_id:5, password:"password5")
-UserPassword.create!(user_id:6, password:"password6")
-UserPassword.create!(user_id:7, password:"password7")
-UserPassword.create!(user_id:8, password:"password8")
-UserPassword.create!(user_id:9, password:"password9")
-UserPassword.create!(user_id:10, password:"password10")
-UserPassword.create!(user_id:11, password:"password11")
-UserPassword.create!(user_id:12, password:"password12")
-UserPassword.create!(user_id:13, password:"password13")
 for  i in 1..8
   Profile.create!(user_id:i,first_name:"normalUserFirstName#{i}", last_name:"normalUserLastName#{i}", bio:"bio#{i}",
                   country:"country#{i%2}", city:"city#{i%2}")

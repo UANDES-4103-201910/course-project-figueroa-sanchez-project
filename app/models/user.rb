@@ -7,6 +7,11 @@ class EmailValidator < ActiveModel::EachValidator
 end
 
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
   has_many :admin_black_lists
   has_many :admin_locations
   has_one :black_list
@@ -15,10 +20,8 @@ class User < ApplicationRecord
   has_one :profile
   has_many :reports
   has_many :user_role
-  has_many :user_passwords
   has_many :validations
   has_many :roles, through: :user_role
-  validates :mail, presence: true, uniqueness: true
 
 
   def self.users_by_roles
@@ -66,6 +69,19 @@ class User < ApplicationRecord
     geofences
   end
 
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.where(email: data['email']).first
+
+    # Uncomment the section below if you want users to be created if they don't exist
+    # unless user
+    #     user = User.create(name: data['name'],
+    #        email: data['email'],
+    #        password: Devise.friendly_token[0,20]
+    #     )
+    # end
+    user
+  end
 
 end
 
