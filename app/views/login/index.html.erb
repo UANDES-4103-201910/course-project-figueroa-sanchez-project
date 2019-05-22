@@ -1,38 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Login</title>
-    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
-  </head>
-  <body>
-    <p></p>
-    <div class="container d-xl-flex justify-content-md-center">
-      <div class="jumbotron justify-content-md-center">
-          <form>
-            <div class="text-center">
-            <i class="fas fa-user-circle fa-7x" style="margin-top: -300px;"></i>
-            <h2>SIGN IN</h2>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-dark btn-block">LOGIN</button>
-            <button type="button" class="btn btn-link">Register</button>
-            <a href="/recover_password/index"><button type="button" class="btn btn-link">Recover Password</button></a>
-            <div id="my-signin2"></div>
-            <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-          </form>
-          <div class="row">
-            <a href="/"><button class="btn btn-danger">Normal/guest user</button></a>
-            <a href="/admin_home"><button class="btn btn-danger">Admin home</button></a>
-            <a href="/super_admin_home"><button class="btn btn-danger">Super admin home</button></a>
-          </div>
+<head>
+  <title>Login</title>
+  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+</head>
+<body>
+<p></p>
+<div class="container d-xl-flex justify-content-md-center">
+  <div class="jumbotron justify-content-md-center">
+    <form>
+      <div class="text-center">
+        <i class="fas fa-user-circle fa-7x" style="margin-top: -300px;"></i>
+        <h2>SIGN IN</h2>
       </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-dark btn-block">LOGIN</button>
+      <button type="button" class="btn btn-link">Register</button>
+      <a href="/recover_password/index">
+        <button type="button" class="btn btn-link">Recover Password</button>
+      </a>
+      <div id="my-signin2"></div>
+      <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    </form>
+    <div class="row">
+      <a href="/">
+        <button class="btn btn-danger">Normal/guest user</button>
+      </a>
+      <a href="/admin_home">
+        <button class="btn btn-danger">Admin home</button>
+      </a>
+      <a href="/super_admin_home">
+        <button class="btn btn-danger">Super admin home</button>
+      </a>
     </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>
