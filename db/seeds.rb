@@ -45,7 +45,7 @@ for  i in 1..8
                   country:"country#{i%2}", city:"city#{i%2}")
 end
 for  i in 9..13
-  Profile.create!(user_id:i,first_name:"administratorFirstName#{i}", last_name:"administratorLastName#{i}", bio:"bio#{i}",
+  Profile.create!(user_id:i,first_name:"administratorFirstName#{i}", last_name:"administratorLastaName#{i}", bio:"bio#{i}",
                   country:"country#{i%2}", city:"city#{i%2}")
 end
 
