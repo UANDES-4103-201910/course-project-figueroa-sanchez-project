@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_215720) do
+ActiveRecord::Schema.define(version: 2019_05_17_213623) do
 
   create_table "admin_black_lists", force: :cascade do |t|
     t.integer "black_list_id"
