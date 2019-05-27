@@ -34,7 +34,7 @@ class Post < ApplicationRecord
   end
 
   def author
-     author = User.find(user_id).mail
+     author = User.find(user_id).email
   end
 
   def get_votes
@@ -68,13 +68,13 @@ class Post < ApplicationRecord
     reports_raw.each do |report|
       report_d = Hash.new
       report_d["category"] = ReportCategory.find(report.report_category_id).name
-      report_d["author"] = User.find(report.user_id).mail
+      report_d["author"] = User.find(report.user_id).email
       report_d["comment"] = report.comment
     end
   end
 
   def get_user_mail
-    user_mail = User.find(user_id).mail
+    user_mail = User.find(user_id).email
   end
 
   def get_user_photo
