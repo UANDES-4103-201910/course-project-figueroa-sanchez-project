@@ -12,41 +12,64 @@
 </head>
 
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">M.A.P.I.</a>
-    <div class="navbar-collapse">
-      <form>
-        <div class="input-group">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link text-white" href="#">Log in</a>
-        </li>
-        <li class="nav-item active">
-          <div class="btn-group">
-            <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Name
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="/profiles/1">Profile</a>
-              <a class="dropdown-item" href="#">Edit profile</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/login">Logout</a>
+  <div style="margin-bottom: 20px">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">M.A.P.I.</a>
+      <div class="navbar-collapse">
+        <% if not @sign_in_view %>
+          <form>
+            <div class="input-group">
+              <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
+          </form>
+        <% end %>
+        <ul class="navbar-nav ml-auto">
+          <% if user_signed_in? %>
+            <li class="nav-item active">
+              <div class="btn-group">
+                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <% if @current_profile %>
+                    <%= @current_profile.first_name %>
+                  <% end %>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <% if @current_profile %>
+                    <a class="dropdown-item" href="/profiles/1">Profile</a>
+                    <a class="dropdown-item" href="#">Edit profile</a>
+                  <% end %>
+                  <div class="dropdown-divider"></div>
+                  <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "dropdown-item") %>
+                </div>
+              </div>
+            </li>
+          <% else %>
+            <li class="nav-item active">
+              <a class="nav-link text-white" href="/users/sign_in">Log in</a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
 </header>
 <body>
+<div class="container">
+  <% flash.each do |key, value| %>
+    <% if key == "alert" %>
+      <div class="alert alert-warning"><%= value %></div>
+    <% elsif key == "notice" %>
+      <div class="alert alert-success"><%= value %></div>
+    <% else %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+  <% end %>
+</div>
 <p></p>
 <%= yield %>
 </body>

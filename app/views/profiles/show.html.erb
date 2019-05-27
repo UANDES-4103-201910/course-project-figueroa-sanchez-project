@@ -1,4 +1,3 @@
-
 <div class="container">
   <p></p>
   <div class="row">
@@ -11,10 +10,10 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h6 class="card-title"><%=@profile.first_name%> </h6>
-              <h6 class="card-title"><%=@profile.last_name%> </h6>
+              <h6 class="card-title"><%= @profile.first_name %> </h6>
+              <h6 class="card-title"><%= @profile.last_name %> </h6>
               <br>
-              <p class="card-text"><%=@profile.bio %></p>
+              <p class="card-text"><%= @profile.bio %></p>
             </div>
           </div>
         </div>
@@ -23,7 +22,7 @@
       <ul class="list-group">
         <li class="list-group-item">
           <h6><b><u>Email</u></b></h6>
-          <%= @user.mail %>
+          <%= @user.email %>
         </li>
         <li class="list-group-item">
           <h6><b><u>Country</u></b></h6>
@@ -31,69 +30,75 @@
         </li>
         <li class="list-group-item">
           <h6><b><u>City</u></b></h6>
-          <%=@profile.city %>
+          <%= @profile.city %>
 
         </li>
       </ul>
     </div>
-    <div class="col-sm-8" >
+    <div class="col-sm-8">
       <div class="container justify-content-xl-center">
-        <ul class="list-group ">
-          <% @posts.each do |post| %>
-            <li class="list-group-item">
-              <div class="card mb-3">
-                <div class="card-header">
-                  <div class="row">
-                    <div class="col-md-10">
-                      <img src="https://cdn.iconverticons.com/files/png/c09db90b332587ca_32x32.png" class="avatar img-circle img-thumbnail" alt="avatar">
-                      <a href="#">
-                        <%= @profile.first_name %>
-                      </a>
-                    </div>
-                    <div class="col-md-2 text-center">
-                      <small><%=post.created_at.to_date %></small>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body text-left">
-                  <div class="row">
-                    <div class="col-md-10">
-                      <h5 class="card-title"><%=post.title %></h5>
-                    </div>
-                    <div class="col-md-2 text-center">
-                      <%if post.solved %>
-                        <i class="fas fa-check fa-2x"></i>
-                      <% end %>
+        <% if @posts.length > 0 %>
+          <ul class="list-group ">
+            <% @posts.each do |post| %>
+              <li class="list-group-item">
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-10">
+                        <img src="https://cdn.iconverticons.com/files/png/c09db90b332587ca_32x32.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                        <a href="#">
+                          <%= @profile.first_name %>
+                        </a>
+                      </div>
+                      <div class="col-md-2 text-center">
+                        <small><%= post.created_at.to_date %></small>
+                      </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <p class="card-text"><%=post.description %></p>
+                  <div class="card-body text-left">
+                    <div class="row">
+                      <div class="col-md-10">
+                        <h5 class="card-title"><%= post.title %></h5>
+                      </div>
+                      <div class="col-md-2 text-center">
+                        <% if post.solved %>
+                          <i class="fas fa-check fa-2x"></i>
+                        <% end %>
+                      </div>
                     </div>
-                  </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <p class="card-text"><%= post.description %></p>
+                      </div>
+                    </div>
 
-                </div>
-                <div class="card-footer">
+                  </div>
+                  <div class="card-footer">
                     <div class="row">
                       <div class="col-sm-8">
                         <a href="#" class="btn btn-dark">Comments</a>
                       </div>
                       <div class="col-sm-4 text-right">
-                        <%=@votes[post.id]["up"] %>
+                        <%= @votes[post.id]["up"] %>
                         <a class="btn">
                           <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
                         </a>
-                        <%=@votes[post.id]["down"] %>
+                        <%= @votes[post.id]["down"] %>
                         <a class="btn">
                           <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
                         </a>
                       </div>
                     </div>
+                  </div>
                 </div>
-              </div>
-            </li>
-          <% end %>
-        </ul>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <div class="jumbotron">
+            <h2>You have no posts yet</h2>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
