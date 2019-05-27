@@ -110,5 +110,5 @@ Role.create!(name:"super_administrator", description:"Manages the administrator 
 # AdminLocation.create(user_id:10, location:"France")
 # AdminLocation.create(user_id:10, location:"Italy")
 # AdminLocation.create(user_id:11, location:"Japan")
-# AdminLocation.create(user_id:11, location:"China")
+# AdminLocation.create(user_id:11, location:" China")
 # AdminLocation.create(user_id:11, location:"South korea")
