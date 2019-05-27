@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_213623) do
+ActiveRecord::Schema.define(version: 2019_05_26_223012) do
 
   create_table "admin_black_lists", force: :cascade do |t|
     t.integer "black_list_id"
@@ -130,6 +130,17 @@ ActiveRecord::Schema.define(version: 2019_05_17_213623) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "searches", force: :cascade do |t|
+    t.string "keywords"
+    t.string "username"
+    t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.boolean "profile"
+    t.index ["user_id"], name: "index_searches_on_user_id"
   end
 
   create_table "shared_posts", force: :cascade do |t|
