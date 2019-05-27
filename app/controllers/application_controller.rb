@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
     if current_user
       user_profile = Profile.where(user_id: current_user.id)
       if user_profile.length == 0
-        redirect_to registration__url
+        redirect_to registration_url
       end
     end
   end

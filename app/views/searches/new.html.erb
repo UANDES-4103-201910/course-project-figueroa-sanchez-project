@@ -1,5 +1,3 @@
-
-
 <h1>Advanced Search</h1>
 
 <%= form_for @search do |f| %>
@@ -8,8 +6,12 @@
     <%= f.text_field :keywords %>
   </div>
   <div class="field">
-  </div>
-  <div class="field">
+    <%= f.label 'Search Options' %><br />
+    <%= f.label :profile, "Profile", :value => "true"  %>
+    <%= f.radio_button :profile, true, :location => false, :checked => true %>
+    <%= f.label :profile, "Location", :value => "false" %>
+    <%= f.radio_button :profile, false, :location => true %>
+
   </div>
   <div class="actions"><%= f.submit "Search" %></div>
 <% end %>

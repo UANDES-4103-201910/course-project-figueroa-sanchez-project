@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :user_role
   has_many :validations
   has_many :roles, through: :user_role
+  has_many :searches
 
 
   def self.users_by_roles
