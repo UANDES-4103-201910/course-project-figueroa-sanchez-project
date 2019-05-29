@@ -38,14 +38,12 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    params = user_params
+    @user_to_update = User.find(user_params[:id])
+    if @user_to_update.update(user_params)
+      redirect_back(fallback_location: root_path); flash[:success] = "User was successfully edited"
+    else
+      redirect_back(fallback_location: root_path); flash[:danger] = "Error editing user"
     end
   end
 
@@ -54,7 +52,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_back(fallback_location: root_path); flash[:success] = 'User was successfully destroyed.' }
       format.json { head 200 }
     end
   end
@@ -67,7 +65,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:mail, :is_active)
+      params.require(:user).permit(:id, :email, :password, :is_active)
     end
 
   

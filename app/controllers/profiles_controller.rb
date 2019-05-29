@@ -34,6 +34,7 @@ class ProfilesController < ApplicationController
   def create
     parameters = profile_params
     parameters["user"] = current_user
+    current_user.update(is_active:true)
     @profile = Profile.create(parameters)
     UserRole.create(user_id:current_user.id, role_id:1)
     redirect_to root_path
@@ -42,6 +43,7 @@ class ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
+    @profile_to_update = Profile.find(params[:id])
     respond_to do |format|
       if @profile.update(profile_params)
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
@@ -72,6 +74,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:user, :first_name, :last_name, :bio, :country, :city)
+      params.require(:profile).permit(:id, :user, :first_name, :last_name, :bio, :country, :city)
     end
 end

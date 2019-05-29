@@ -11,36 +11,36 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.hidden_field :user, value: current_user.id %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
+    <%= form.text_field :first_name, class:"form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
+    <%= form.text_field :last_name, class:"form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :bio %>
-    <%= form.text_area :bio %>
+  <div class="form-group">
+    <%= form.label :biography %>
+    <%= form.text_area :bio, class:"form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :country %>
-    <%= form.text_field :country %>
+    <%= form.text_field :country, class:"form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :city %>
-    <%= form.text_field :city %>
+    <%= form.text_field :city, class:"form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit "Create profile", :class =>"btn btn-dark btn-block" %>
   </div>
 <% end %>

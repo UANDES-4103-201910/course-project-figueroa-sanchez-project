@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   before_action :check_profile
-  before_action :check_role
   def home
     all_posts = Post.get_posts_ordered_by_votes
     top_20_posts_raw = all_posts[5..20]
@@ -46,11 +45,4 @@ class HomeController < ApplicationController
     end
   end
 
-  def check_role
-    if current_user
-      if current_user.is_admin?
-        redirect_to admin_home_path
-      end
-    end
-  end
 end
