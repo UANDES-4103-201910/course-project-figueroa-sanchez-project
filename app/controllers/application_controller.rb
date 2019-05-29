@@ -2,19 +2,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :get_profile
 
-  def after_sign_in_path_for(resource)
-    if resource.roles.first
-      name = resource.roles.first.name
-      if name == "administrator"
-        admin_home_path
-      else
-        root_path
-      end
-    else
-      root_path
-    end
-  end
-
   def after_sign_up_path_for(resource)
     new_profile_url
   end

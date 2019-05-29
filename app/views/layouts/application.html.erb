@@ -30,6 +30,11 @@
         <% end %>
         <ul class="navbar-nav ml-auto">
           <% if user_signed_in? %>
+            <li>
+              <% if current_user.is_admin? %>
+                  <%= link_to ' Admin Home', admin_home_path, class: "fas fa-house-damage fa-2x btn btn-outline-warning" %>
+              <% end %>
+            </li>
             <li class="nav-item active">
               <div class="btn-group">
                 <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
