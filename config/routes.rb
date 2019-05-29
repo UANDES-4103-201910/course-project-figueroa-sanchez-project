@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'report_post/:id', to: 'report_post#index'
   get 'post_view/:id', to: 'post_view#index'
   get 'registration/', to: 'registration#index'
-  get 'searches/', to: 'searches#index'
+  get 'searches/', to: 'searches#new'
   get 'change_password/index'
   get 'recover_password/index'
   get 'profile_view/index'
