@@ -1,3 +1,4 @@
+<%=javascript_include_tag 'post.js' %>
 <div class="container justify-content-xl-center">
   <ul class="list-group ">
     <li class="list-group-item">
@@ -74,12 +75,15 @@
             </div>
             <div class="col-sm-4 text-right">
               <%= @post['votes']['up'] %>
-              <a href="" class="btn">
+              <a class="btn"  id="vote-up" href="<%= vote_up_path %>">
                 <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
               </a>
               <%= @post['votes']['down'] %>
-              <a class="btn">
+              <a class="btn" id="vote-down" href="<%= vote_down_path %>">
                 <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
+              </a>
+              <a class="btn" id="follow-post" href="<%= followpost_path %>" data-toggle="tooltip" data-placement="bottom" title="Follow">
+                <i class="fas fa-angle-double-right"></i>
               </a>
             </div>
           </div>

@@ -7,6 +7,7 @@ class Post < ApplicationRecord
   has_many :comments
   has_many :validations
   has_many :shared_posts
+  has_many :follow_posts
   validates :title, presence: true, length: { maximum: 50 }
 
   def self.get_posts_ordered_by_votes

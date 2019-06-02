@@ -1,0 +1,30 @@
+<div class="jumbotron">
+  <p id="notice"><%= notice %></p>
+
+  <h1>Your Following Posts</h1>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Post</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @follow_posts.each do |follow_post| %>
+      <tr>
+        <td><%= link_to Post.find_by_id(follow_post.post).title, follow_post %></td>
+        <td><%= link_to Profile.find_by_user_id(follow_post.user).first_name,
+                        profile_path(id: Profile.find_by_user_id(follow_post.user).id) %></td>
+        <td><%= link_to 'Delete', follow_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+
+</div>

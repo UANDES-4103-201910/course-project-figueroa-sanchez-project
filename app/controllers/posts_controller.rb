@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
+  $current_post = 0
   # GET /posts
   # GET /posts.json
   def index
@@ -11,6 +12,7 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @post = Post.get_post(params[:id])
+    $current_post = @post['id']
     @comments = Comment.get_post_comments(params[:id])
   end
 
@@ -66,12 +68,18 @@ class PostsController < ApplicationController
   end
 
   def vote_up
-    puts("vote up")
-    Validation.new(post_id: @post.id, user_id: current_user.id, vote: 1)
+    validation = Validation.create(post: Post.find_by_id($current_post) , user: current_user, vote: 1)
+    redirect_back(fallback_location: root_path)
   end
 
   def vote_down
+    validation = Validation.create(post: Post.find_by_id($current_post) , user: current_user, vote: -1)
+    redirect_back(fallback_location: root_path)
+  end
 
+  def follow_post
+    follow_post = FollowPost.create(post: Post.find_by_id($current_post) , user: current_user)
+    redirect_back(fallback_location: root_path)
   end
 
   private
