@@ -29,10 +29,36 @@
           </form>
         <% end %>
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <div class="col">
+              <div class="row">
+                <a class="text-white" href="<%=root_path %>"><i class="fas fa-user fa-2x"></i></a>
+              </div>
+              <div class="row text-white">
+                Home
+              </div>
+            </div>
+          </li>
           <% if user_signed_in? %>
-            <li>
-              <% if current_user.is_admin? %>
-                  <%= link_to ' Admin Home', admin_home_path, class: "fas fa-house-damage fa-2x btn btn-outline-warning" %>
+            <li class="nav-item">
+              <% if current_user.is_super_admin? %>
+                <div class="col">
+                  <div class="row">
+                    <a class="text-white" href="<%=super_admin_home_path %>"><i class="fas fa-user-shield fa-2x"></i></a>
+                  </div>
+                  <div class="row text-white">
+                    Home
+                  </div>
+                </div>
+              <% elsif current_user.is_admin? %>
+                <div class="col">
+                  <div class="row">
+                    <a class="text-white" href="<%=admin_home_path %>"><i class="fas fa-user-cog fa-2x"></i></a>
+                  </div>
+                  <div class="row text-white">
+                    Home
+                  </div>
+                </div>
               <% end %>
             </li>
             <li class="nav-item active">
@@ -44,8 +70,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <% if @current_profile %>
-                    <a class="dropdown-item" href="/profiles/1">Profile</a>
-                    <a class="dropdown-item" href="#">Edit profile</a>
+                    <a class="dropdown-item" href="/profiles/<%=current_user.id %>">Profile</a>
+                    <%=link_to 'Edit profile', edit_profile_path(@current_profile.id), class:"dropdown-item" %>
                   <% end %>
                   <div class="dropdown-divider"></div>
                   <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "dropdown-item") %>
@@ -54,7 +80,7 @@
             </li>
           <% else %>
             <li class="nav-item active">
-              <a class="nav-link text-white" href="/users/sign_in">Log in</a>
+              <a class="nav-link text-white" href="/users/sign_in">Sign in</a>
             </li>
           <% end %>
         </ul>
@@ -79,18 +105,14 @@
 <%= yield %>
 </body>
 <footer class="page-footer font-small unique-color-dark pt-4">
-  <div class="container">
     <ul class="list-unstyled list-inline text-center py-2">
       <li class="list-inline-item">
         <h5 class="mb-1">Register for free</h5>
       </li>
       <li class="list-inline-item">
-        <a href="/registration" class="btn btn-outline-dark">Sign up!</a>
+        <a href="/users/sign_up" class="btn btn-outline-dark">Sign up!</a>
       </li>
     </ul>
-  </div>
-  <div class="footer-copyright text-center py-3">© 2019 Copyright:
-    <a href="/profile_view"> Diositoylavigenmaria</a>
   </div>
 </footer>
 </html>

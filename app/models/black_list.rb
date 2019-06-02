@@ -1,6 +1,7 @@
 class BlackList < ApplicationRecord
   belongs_to :user
   has_one :admin_black_list
+  validates_uniqueness_of :user_id
 
   def get_posts
     black_list = BlackList.all

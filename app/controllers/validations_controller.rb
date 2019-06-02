@@ -1,6 +1,6 @@
 class ValidationsController < ApplicationController
   before_action :set_validation, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /validations
   # GET /validations.json
   def index

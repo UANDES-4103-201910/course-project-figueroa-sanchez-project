@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,:trackable,
+         :recoverable, :rememberable, :validatable, :trackable,
          :omniauthable, omniauth_providers: [:google_oauth2]
   has_many :admin_black_lists
   has_many :admin_locations
@@ -43,17 +43,31 @@ class User < ApplicationRecord
   end
 
   def is_admin?
-    admin_role = UserRole.where(user_id:id, role_id: 2)
-    if admin_role.length >0
+    admin_role = UserRole.where(user_id: id, role_id: 2)
+    if admin_role.length > 0
       true
     else
       false
     end
+  end
 
+
+  def is_super_admin?
+    super_admin_role = UserRole.where(user_id: id, role_id: 3)
+    if super_admin_role.length > 0
+      true
+    else
+      false
+    end
   end
 
   def get_role
-    role = UserRole.where(user_id: id).first.role_id
+    role = UserRole.where(user_id: id)
+    roles = Array.new
+    role.each do |r|
+      roles << r.role_id
+    end
+    roles.max
   end
 
   def self.get_admins_mails

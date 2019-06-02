@@ -1,6 +1,6 @@
 class AdminBlackListsController < ApplicationController
   before_action :set_admin_black_list, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /admin_black_lists
   # GET /admin_black_lists.json
   def index

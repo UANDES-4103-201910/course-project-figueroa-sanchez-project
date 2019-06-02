@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!
   # GET /users
   # GET /users.json
   def index
@@ -26,19 +27,18 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    UserRole.create(role_id:1, user_id:@user.id)
+    UserRole.create(role_id:2, user_id:@user.id)
+    if @user.save
+      redirect_back(fallback_location: root_path); flash[:success] = "Administrator successfully created"
+    else
+      redirect_back(fallback_location: root_path); flash[:danger] = "Error creating administrator"
     end
   end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    params = user_params
     @user_to_update = User.find(user_params[:id])
     if @user_to_update.update(user_params)
       redirect_back(fallback_location: root_path); flash[:success] = "User was successfully edited"

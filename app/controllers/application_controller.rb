@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!
   before_action :get_profile
 
   def after_sign_up_path_for(resource)
@@ -24,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_profile
-    if not profile_available
+    if not profile_available and user_signed_in?
       redirect_to new_profile_url
     end
   end
