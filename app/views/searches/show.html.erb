@@ -2,5 +2,7 @@
 
 <h1>Search Results</h1>
 
-<%= render @search.posts %>
+<%= @search.posts.each do |post| %>
+  <%= post %>
+<% end %>
 

@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
-  has_many :attachments
+  has_many_attached :images
+  has_many_attached :files
   has_one :dumpster
   belongs_to :user
   has_many :reports
@@ -46,7 +47,7 @@ class Post < ApplicationRecord
   end
 
   def get_post_attachments
-    post_attachments_items = Attachment.where(post_id: id)
+    post_attachments_items = Post.where(post_id: id).images
     categories = Category.all
     attachments = Hash.new
     categories.each do |item|
@@ -92,8 +93,11 @@ class Post < ApplicationRecord
     post_info["date"] = post.created_at.to_date
     post_info["user_first_name"] = Profile.find(post.user_id).first_name
     post_info["user_last_name"] = Profile.find(post.user_id).last_name
+    post_info["user_image"] =  Profile.find(post.user_id).image
     post_info['votes'] = post.get_votes
     post_info['total_votes'] = Post.get_posts_votes[post.id]
+    post_info['images'] = post.images
+    post_info['files'] = post.files
     post_info
   end
 
@@ -112,4 +116,5 @@ class Post < ApplicationRecord
     end
     comments
   end
+
 end

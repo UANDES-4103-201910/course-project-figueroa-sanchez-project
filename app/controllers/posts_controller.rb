@@ -10,6 +10,8 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @post = Post.get_post(params[:id])
+    @comments = Comment.get_post_comments(params[:id])
   end
 
   # GET /posts/new
@@ -24,7 +26,9 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
+    parameters = post_params
+    parameters["user"] = current_user
+    @post = Post.new(parameters)
 
     respond_to do |format|
       if @post.save
@@ -61,6 +65,15 @@ class PostsController < ApplicationController
     end
   end
 
+  def vote_up
+    puts("vote up")
+    Validation.new(post_id: @post.id, user_id: current_user.id, vote: 1)
+  end
+
+  def vote_down
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -69,6 +82,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:user_id, :title, :description)
+      params.require(:post).permit(:title, :description, images: [], files: [])
     end
 end

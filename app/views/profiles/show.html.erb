@@ -6,7 +6,7 @@
       <div class="card mb-3" style="max-width: 540px;">
         <div class="row no-gutters">
           <div class="col-md-4  d-flex align-items-center">
-            <img src="https://cdn.iconverticons.com/files/png/c09db90b332587ca_128x128.png" class="avatar img-circle img-thumbnail" alt="avatar">
+            <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "120x120") %>
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -45,7 +45,7 @@
                   <div class="card-header">
                     <div class="row">
                       <div class="col-md-10">
-                        <img src="https://cdn.iconverticons.com/files/png/c09db90b332587ca_32x32.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                        <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
                         <a href="#">
                           <%= @profile.first_name %>
                         </a>

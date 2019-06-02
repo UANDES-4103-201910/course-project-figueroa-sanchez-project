@@ -1,19 +1,106 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Profile:</strong>
-  <%= @post.profile %>
-</p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
-
-<p>
-  <strong>Descrption:</strong>
-  <%= @post.descrption %>
-</p>
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<div class="container justify-content-xl-center">
+  <ul class="list-group ">
+    <li class="list-group-item">
+      <div class="card mb-3">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-10">
+              <%= image_tag(@post['user_image'], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+              <a href="#">
+                <%= @post['user_first_name'] + ' ' + @post['user_last_name'] %>
+              </a>
+            </div>
+            <div class="col-md-2 text-center">
+              <small><%=@post['date'] %></small>
+              <br>
+              <a href="/report_post/<%= @post['id'] %>">
+                <small>Report</small>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body text-left">
+          <div class="row">
+            <div class="col-md-10">
+              <h5 class="card-title"><%=@post['title'] %></h5>
+            </div>
+            <div class="col-md-2 text-center">
+              <% if @post['solved'] %>
+                <i class="fas fa-check fa-2x"></i>
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p class="card-text"><%=@post["description"] %></p>
+            </div>
+            <div>
+              <% if @post['images'].present? %>
+                <!-- @post.image.present? will always return true, use attached? to check presence -->
+                <p>
+                  <strong>Images:</strong>
+                  <br>
+                <ul>
+                  <% @post['images'].each do |image| %>
+                    <li>
+                      <%= image_tag image %>
+                    </li>
+                  <% end %>
+                </ul>
+                </p>
+              <% end %>
+              <% if@post['files'].present? %>
+                <p>
+                  <strong>File:</strong>
+                  <br>
+                <ul>
+                  <% @post['files'].each do |file| %>
+                    <li>
+                      <%= link_to "../" + url_for(file) do %>
+                        This is a file
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-sm-8">
+              <h6>Comments</h6>
+            </div>
+            <div class="col-sm-4 text-right">
+              <%= @post['votes']['up'] %>
+              <a href="" class="btn">
+                <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
+              </a>
+              <%= @post['votes']['down'] %>
+              <a class="btn">
+                <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <% @comments.each do |comment| %>
+      <li class="list-group-item">
+        <div class="media-body">
+          <div class="media mt-3">
+            <img src="https://cdn.iconverticons.com/files/png/c09db90b332587ca_64x64.png" class="mr-3" alt="...">
+            <div class="media-body">
+              <a href="/profiles/<%= comment['user_profile_id'] %>">
+                <h6 class="mt-0"><%= comment["user_first_name"] %> <%= comment["user_last_name"] %> </h6>
+              </a>
+              <%= comment["text"] %>
+            </div>
+            <small><%= comment['date'] %></small>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
