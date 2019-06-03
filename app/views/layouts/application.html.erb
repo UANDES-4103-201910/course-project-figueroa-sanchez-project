@@ -44,8 +44,10 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <% if @current_profile %>
-                    <a class="dropdown-item" href="/profiles/1">Profile</a>
-                    <a class="dropdown-item" href="#">Edit profile</a>
+                    <a class="dropdown-item" href="/profiles/<%= Profile.find_by_user_id(current_user).id  %>">Profile</a>
+                    <a class="dropdown-item" href="/profiles/<%= Profile.find_by_user_id(current_user).id  %>/edit" >Edit profile</a>
+                    <a class="dropdown-item" href="/posts/" >My Posts</a>
+                    <a class="dropdown-item" href="/follow_posts" >My Following Posts</a>
                   <% end %>
                   <div class="dropdown-divider"></div>
                   <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "dropdown-item") %>

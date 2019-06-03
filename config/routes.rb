@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :follow_posts
+  get 'posts/new_comment', to:'posts#new_comment', as: 'new_comment_post'
+  get 'profiles/new_comment', to:'profiles#new_comment', as: 'new_comment_prof'
   get 'posts/vote_up', to:'posts#vote_up', as: 'vote_up'
   get 'posts/vote_down', to:'posts#vote_down', as: 'vote_down'
   get 'posts/follow_post', to:'posts#follow_post', as: 'followpost'

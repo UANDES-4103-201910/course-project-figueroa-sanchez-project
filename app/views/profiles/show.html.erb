@@ -6,7 +6,11 @@
       <div class="card mb-3" style="max-width: 540px;">
         <div class="row no-gutters">
           <div class="col-md-4  d-flex align-items-center">
-            <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "120x120") %>
+            <% if @profile.image.present? %>
+              <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "120x120") %>
+            <% else %>
+              <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="120x120">
+            <% end %>
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -36,6 +40,29 @@
       </ul>
     </div>
     <div class="col-sm-8">
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
+        New Post
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <%= render '/posts/form', post: @new_post %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p></p>
       <div class="container justify-content-xl-center">
         <% if @posts.length > 0 %>
           <ul class="list-group ">
@@ -45,7 +72,11 @@
                   <div class="card-header">
                     <div class="row">
                       <div class="col-md-10">
-                        <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                        <% if @profile.image.present? %>
+                          <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                        <% else %>
+                          <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="50x50">
+                        <% end %>
                         <a href="#">
                           <%= @profile.first_name %>
                         </a>
@@ -58,7 +89,7 @@
                   <div class="card-body text-left">
                     <div class="row">
                       <div class="col-md-10">
-                        <h5 class="card-title"><%= post.title %></h5>
+                        <a href="<%= post_path(post.id) %>" class="btn-outline-warning"><h5 class="card-title"><%= post.title %></h5></a>
                       </div>
                       <div class="col-md-2 text-center">
                         <% if post.solved %>
@@ -76,7 +107,40 @@
                   <div class="card-footer">
                     <div class="row">
                       <div class="col-sm-8">
-                        <a href="#" class="btn btn-dark">Comments</a>
+                        <a class="btn btn-dark" data-toggle="collapse" href="#collapseExample<%= post.id %>" role="button" aria-expanded="false" aria-controls="collapseExample<%= post.id %>">
+                          Comments
+                        </a>
+                        <div class="collapse" id="collapseExample<%= post.id %>">
+                          <div class="card card-body">
+                            <ul class="list-grouṕ">
+                              <% if @comments[post.id].present? %>
+                                <% @comments[post.id].each do |comment|%>
+                                  <h5>Comment:</h5>
+                                  <% if Profile.find_by_id(comment['user_profile_id']).image.present? %>
+                                    <%= image_tag(Profile.find_by_id(comment['user_profile_id']).image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "30x30") %>
+                                  <% else %>
+                                    <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="30x30">
+                                  <% end %>
+                                  <a href="<%= profile_path(comment['user_profile_id']) %>">
+                                    <%= Profile.find_by_id(comment['user_profile_id']).first_name + " " +
+                                            Profile.find_by_id(comment['user_profile_id']).last_name %>
+                                  </a>
+                                  <%= comment['text'] %>
+                                <% end %>
+                              <% else %>
+                                <p> No comments yet </p>
+                              <% end %>
+                            </ul>
+                            <div class="card card-body">
+                              <%= form_for($new_comment) do |form| %>
+                                <%= form.text_area :new_comment %>
+                                <a class="btn btn-dark" id="new_comment<%= post.id %>" href="<%= new_comment_prof_path(:current_post => post.id) %>">
+                                  New Comment
+                                </a>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="col-sm-4 text-right">
                         <%= @votes[post.id]["up"] %>

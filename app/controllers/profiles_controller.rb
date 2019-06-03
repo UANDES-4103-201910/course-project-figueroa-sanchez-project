@@ -1,6 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
-
+  $new_comment = ""
+  $current_post = 0
   # GET /profiles
   # GET /profiles.json
   def index
@@ -14,10 +15,12 @@ class ProfilesController < ApplicationController
     @user = User.find(params[:id])
     @posts = Post.where(user_id: params[:id]).order(created_at: :desc)
     @votes = Hash.new
+    @comments = Hash.new
     @posts.each do |post|
       @votes[post.id] = post.get_votes
+      @comments[post.id] = Comment.get_post_comments(post.id)
     end
-
+    @new_post = Post.new
   end
 
   # GET /profiles/new
@@ -64,6 +67,11 @@ class ProfilesController < ApplicationController
       format.html { redirect_to profiles_url, notice: 'Profile was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def new_comment
+    comment = Comment.create(post: Post.find_by_id(params[:current_post]) , user: current_user, comment: $new_comment)
+    redirect_back(fallback_location: root_path)
   end
 
   private

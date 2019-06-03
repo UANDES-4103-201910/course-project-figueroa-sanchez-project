@@ -2,10 +2,11 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
   $current_post = 0
+  $new_comment = ""
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.where(user_id: current_user)
   end
 
   # GET /posts/1
@@ -79,6 +80,11 @@ class PostsController < ApplicationController
 
   def follow_post
     follow_post = FollowPost.create(post: Post.find_by_id($current_post) , user: current_user)
+    redirect_back(fallback_location: root_path)
+  end
+
+  def new_comment
+    comment = Comment.create(post: Post.find_by_id($current_post) , user: current_user, comment: $new_comment)
     redirect_back(fallback_location: root_path)
   end
 
