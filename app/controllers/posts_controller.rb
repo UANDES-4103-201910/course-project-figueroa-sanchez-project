@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!
   $current_post = 0
   $new_comment = ""
   # GET /posts

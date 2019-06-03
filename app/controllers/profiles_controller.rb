@@ -1,7 +1,10 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :update]
+
   $new_comment = ""
   $current_post = 0
+  
   # GET /profiles
   # GET /profiles.json
   def index
@@ -39,17 +42,17 @@ class ProfilesController < ApplicationController
     parameters["user"] = current_user
     current_user.update(is_active:true)
     @profile = Profile.create(parameters)
-    UserRole.create(user_id:current_user.id, role_id:1)
     redirect_to root_path
   end
 
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
-    @profile_to_update = Profile.find(params[:id])
-    # @profile_to_update.image.attach(params[:image])
+    params = profile_params
+    params.delete("id")
+    params.delete("user")
     respond_to do |format|
-      if @profile.update(profile_params)
+      if @profile.update(params)
         format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
@@ -62,11 +65,7 @@ class ProfilesController < ApplicationController
   # DELETE /profiles/1
   # DELETE /profiles/1.json
   def destroy
-    @profile.destroy
-    respond_to do |format|
-      format.html { redirect_to profiles_url, notice: 'Profile was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
   end
 
   def new_comment

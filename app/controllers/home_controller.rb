@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
   before_action :check_profile
+  skip_before_action
+
+
   def home
     all_posts = Post.get_posts_ordered_by_votes
     top_20_posts_raw = all_posts[5..20]

@@ -15,7 +15,7 @@ class UsersTest < ApplicationSystemTestCase
     click_on "New User"
 
     check "Is active" if @user.is_active
-    fill_in "Mail", with: @user.mail
+    fill_in "Mail", with: @user.email
     click_on "Create User"
 
     assert_text "User was successfully created"
@@ -27,7 +27,7 @@ class UsersTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     check "Is active" if @user.is_active
-    fill_in "Mail", with: @user.mail
+    fill_in "Mail", with: @user.email
     click_on "Update User"
 
     assert_text "User was successfully updated"

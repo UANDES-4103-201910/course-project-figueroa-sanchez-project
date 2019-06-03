@@ -1,21 +1,5 @@
-
 <div class="d-lg-flex p-3 justify-content-md-center">
   <div class="jumbotron" style="width:100%">
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <form action="#">
-          <div class="input-group">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
     <br>
     <table class="table table-striped table-dark">
       <thead>
@@ -27,21 +11,22 @@
       <th></th>
       </thead>
       <tbody>
-      <%@black_list.each do |user| %>
+      <% @black_list.each do |user| %>
         <tr>
-          <%case %>
-          <%when user["is_active"] %>
+          <% case %>
+          <% when user["is_active"] %>
             <td><i class="fas fa-user fa-3x"></i></td>
-          <%when(not user["is_active"]) %>
+          <% when (not user["is_active"]) %>
             <td><i class="fas fa-user-slash fa-3x"></i></td>
-          <%end %>
-          <td><%=user["first_name"] %></td>
-          <td><%=user["last_name"] %></td>
-          <td><%=user["email"] %></td>
-          <td><%=user["author"] %></td>
+          <% end %>
+          <td><%= user["first_name"] %></td>
+          <td><%= user["last_name"] %></td>
+          <td><%= user["email"] %></td>
+          <td><%= user["author"] %></td>
           <td>
-            <button class="btn btn-outline-warning">Edit</button>
-            <button class="btn btn-outline-light">Remove</button>
+            <button class="btn btn-outline-warning">Ban user</button>
+            <%= link_to 'Remove', black_list_path(user["black_list_id"]),
+                       method: :delete, data: {confirm: "You are going to remove this user from Blacklist. Are you sure?"}, class: "btn btn-outline-light" %>
           </td>
         </tr>
       <% end %>

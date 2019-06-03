@@ -1,4 +1,4 @@
-<%=javascript_include_tag 'profiles.js' %>
+<%= javascript_include_tag 'profiles.js' %>
 <div class="d-lg-flex p-3 justify-content-md-center">
   <div class="jumbotron" style="width:100%">
     <br>
@@ -16,24 +16,72 @@
         <tr>
           <% case %>
           <% when user["role"] == 1 && user["is_active"] %>
-            <td class="align-center"><i class="fas fa-user fa-3x"></i></td>
+            <td>
+              <div class="col">
+                <div class="row">
+                  <i class="fas fa-user fa-3x"></i>
+                </div>
+                <div class="row">
+                  Normal user
+                </div>
+              </div>
+            </td>
           <% when user["role"] == 1 && (not user["is_active"]) %>
-            <td class="align-center"><i class="fas fa-user-slash fa-3x"></i></td>
+            <td>
+              <div class="col">
+                <div class="row">
+                  <i class="fas fa-user-slash fa-3x"></i>
+                </div>
+                <div class="row">
+                  Banned user
+                </div>
+              </div>
+            </td>
           <% when user["role"] == 2 %>
-            <td class="align-center"><i class="fas fa-user-cog fa-3x"></i></td>
+            <td>
+              <div class="col">
+                <div class="row">
+                  <i class="fas fa-user-cog fa-3x"></i>
+                </div>
+                <div class="row">
+                  Administrator
+                </div>
+              </div>
+            </td>
           <% when user["role"] == 3 %>
-            <td class="align-center"><i class="fas fa-user-shield fa-3x"></i></td>
+            <td>
+              <div class="col">
+                <div class="row">
+                  <i class="fas fa-user-shield fa-3x"></i>
+                </div>
+                <div class="row">
+                  Super Administrator
+                </div>
+              </div>
+            </td>
           <% end %>
           <td><%= user["first_name"] %></td>
           <td><%= user["last_name"] %></td>
           <td><%= user["email"] %></td>
           <td><%= user["last_access"] %></td>
-          <% if user["role"] == 1 %>
+          <% if user["role"] <=2 %>
             <td>
-              <% if user["id"] != current_user.id && user["role"] == 1 %>
-                <button class="btn btn-outline-primary edit-button" data-target="#edit-modal" data-value="<%= user["id"] %>" data-toggle="modal">Edit</button>
-                <%= link_to 'Delete', user_path(user["id"]), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-outline-danger" %>
-              <% end %>
+              <div class="dropdown">
+                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown">
+                  Options
+                </button>
+                <div class="dropdown-menu">
+                  <% if (user["id"] != current_user.id && user["role"] == 1) || (current_user.is_super_admin? && (user["id"] != current_user.id)) %>
+                    <a class="btn btn-outline-primary dropdown-item edit-button" data-target="#edit-modal" data-value="<%= user["id"] %>" data-toggle="modal">Edit</a>
+                    <%= link_to 'Delete', user_path(user["id"]), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-outline-danger dropdown-item" %>
+                    <%= link_to 'BlackList', black_list_user_path(user["id"]), method: :post, data: {confirm: 'Are you sure?'}, class: "btn btn-outline-dark dropdown-item" %>
+                    <% if current_user.is_super_admin? %>
+                      <%= link_to 'Make admin', make_admin_path(user["id"]), method: :post, data: {confirm: 'Are you sure?'}, class: "btn btn-outline-secondary dropdown-item" %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+
             </td>
           <% else %>
             <td></td>
@@ -75,7 +123,7 @@
           </div>
 
           <div class="actions">
-            <%= submit_tag("Update", :class=>"btn btn-outline-primary") %>
+            <%= submit_tag("Update", :class => "btn btn-outline-primary") %>
           </div>
         <% end %>
       </div>

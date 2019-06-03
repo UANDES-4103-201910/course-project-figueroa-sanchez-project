@@ -1,4 +1,5 @@
 class UserListController < ApplicationController
+  before_action :authenticate_user!
   def index
     users = User.all
     @users_info = Array.new

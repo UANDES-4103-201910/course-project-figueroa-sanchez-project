@@ -1,6 +1,6 @@
 class BlackListsController < ApplicationController
-  before_action :set_black_list, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_black_list, only: [:show, :edit, :update]
+  before_action :authenticate_user!
   # GET /black_lists
   # GET /black_lists.json
   def index
@@ -15,9 +15,11 @@ class BlackListsController < ApplicationController
 
       profile = Profile.where(user_id: item.user_id).first
       black_item = Hash.new
+      black_item["black_list_id"] = item.id
+      black_item["id"] = user.id
       black_item["first_name"] = profile.first_name
       black_item["last_name"] = profile.last_name
-      black_item["email"] = user.mail
+      black_item["email"] = user.email
       black_item["is_active"] = user.is_active
       if author.length != 0
         black_item["author"] = admins_mails[author.first.user_id]
@@ -45,15 +47,12 @@ class BlackListsController < ApplicationController
   # POST /black_lists
   # POST /black_lists.json
   def create
-    @black_list = BlackList.new(black_list_params)
-
+    @black_list = BlackList.new(user_id: params[:id])
     respond_to do |format|
       if @black_list.save
-        format.html { redirect_to @black_list, notice: 'Black list was successfully created.' }
-        format.json { render :show, status: :created, location: @black_list }
+        format.html {redirect_back(fallback_location: black_list_path); flash[:success] = "User successfully blacklisted."}
       else
-        format.html { render :new }
-        format.json { render json: @black_list.errors, status: :unprocessable_entity }
+        format.html {redirect_back(fallback_location: black_list_path); flash[:danger] = "User is already in the blacklist."}
       end
     end
   end
@@ -63,11 +62,11 @@ class BlackListsController < ApplicationController
   def update
     respond_to do |format|
       if @black_list.update(black_list_params)
-        format.html { redirect_to @black_list, notice: 'Black list was successfully updated.' }
-        format.json { render :show, status: :ok, location: @black_list }
+        format.html {redirect_to @black_list, notice: 'Black list was successfully updated.'}
+        format.json {render :show, status: :ok, location: @black_list}
       else
-        format.html { render :edit }
-        format.json { render json: @black_list.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @black_list.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -75,21 +74,25 @@ class BlackListsController < ApplicationController
   # DELETE /black_lists/1
   # DELETE /black_lists/1.json
   def destroy
-    @black_list.destroy
+    @black_list = BlackList.find(params[:id])
     respond_to do |format|
-      format.html { redirect_to black_lists_url, notice: 'Black list was successfully destroyed.' }
-      format.json { head :no_content }
+      if @black_list.destroy
+        format.html {redirect_back(fallback_location: black_list_path); flash[:success] = 'User removed from Blacklist'}
+      else
+        format.html {redirect_back(fallback_location: black_list_path); flash[:danger] = 'Error removing from blacklist'}
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_black_list
-      @black_list = BlackList.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def black_list_params
-      params.require(:black_list).permit(:user)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_black_list
+    @black_list = BlackList.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def black_list_params
+    params.require(:black_list).permit(:user)
+  end
 end
