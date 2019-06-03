@@ -12,8 +12,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    UserRole.create(role_id:1, user_id:resource.id)
-    resource.is_active = true
     new_profile_url
   end
 

@@ -24,9 +24,10 @@
           <td><%= user["email"] %></td>
           <td><%= user["author"] %></td>
           <td>
-            <button class="btn btn-outline-warning">Ban user</button>
+            <%= link_to 'Ban user', ban_user_path(user["id"]), method: :post,
+                        data: {confirm: "You are going to remove this user from Blacklist. Are you sure?"}, class: "btn btn-outline-danger" %>
             <%= link_to 'Remove', black_list_path(user["black_list_id"]),
-                       method: :delete, data: {confirm: "You are going to remove this user from Blacklist. Are you sure?"}, class: "btn btn-outline-light" %>
+                        method: :delete, data: {confirm: "You are going to Ban this user. Are you sure?"}, class: "btn btn-outline-light" %>
           </td>
         </tr>
       <% end %>
