@@ -40,6 +40,8 @@ class ProfilesController < ApplicationController
   def create
     parameters = profile_params
     parameters["user"] = current_user
+    current_user.is_active = true
+    UserRole.create(role_id:1, user_id:current_user.id)
     current_user.update(is_active:true)
     @profile = Profile.create(parameters)
     redirect_to root_path

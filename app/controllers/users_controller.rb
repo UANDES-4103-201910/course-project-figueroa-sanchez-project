@@ -8,6 +8,16 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def ban_user
+    user_to_ban = User.find(params[:id])
+    if not user_to_ban.is_active
+      redirect_back(fallback_location: root_path); flash[:danger] = "User is already banned"
+    else
+      user_to_ban.update(is_active:false)
+      redirect_back(fallback_location: root_path); flash[:success] = "User banned"
+    end
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show

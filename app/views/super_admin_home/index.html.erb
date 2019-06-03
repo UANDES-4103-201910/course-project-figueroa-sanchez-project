@@ -5,14 +5,18 @@
         <div class="list-group">
           <table class="table table-striped">
             <thead>
-            <th>Id</th>
             <th>Title</th>
             <th>User</th>
             <th>Date</th>
-            <th></th>
             </thead>
             <tbody>
-
+            <%@post_list.each do |item| %>
+              <tr>
+                <td><a href="/post_view/<%= item['post'].id %>"><%= item["post"].title %></a></td>
+                <td><%= item["author"] %></td>
+                <td><%= item["post"].created_at.to_date %></td>
+              </tr>
+            <% end %>
             </tbody>
           </table>
         </div>

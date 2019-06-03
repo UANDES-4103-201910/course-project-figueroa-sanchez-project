@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   resources :user_roles
   post '/user_roles/:id', to: 'user_roles#create', as: 'make_admin'
   post '/black_list/:id', to: 'black_lists#create', as: 'black_list_user'
+  post '/ban_users/:id', to: 'users#ban_user', as: 'ban_user'
   resources :users, :posts
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

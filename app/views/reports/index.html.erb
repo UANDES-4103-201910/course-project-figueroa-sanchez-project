@@ -1,20 +1,5 @@
 <div class="d-lg-flex p-3 justify-content-md-center">
   <div class="jumbotron" style="width:100%">
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <form action="#">
-          <div class="input-group">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
     <br>
     <table class="table table-striped table-hover">
       <thead>
@@ -22,26 +7,14 @@
         <th>Author e-mail</th>
         <th>Creation Date</th>
         <th>Number of reports</th>
-        <th></th>
       </thead>
       <tbody>
       <%@reports.each do |report| %>
-        <tr class="accordion-toggle" data-toggle="collapse" data-target="<%="#post"+report["post_id"] %>">
+        <tr>
           <td><%=report["post_title"] %></td>
           <td><%=report["author"] %></td>
           <td><%=report["date"] %></td>
           <td><%=report["reports_count"] %></td>
-          <td>
-            <button class="btn btn-outline-warning">Edit</button>
-            <button class="btn btn-outline-light">Remove</button>
-          </td>
-        </tr>
-        <tr>
-          <td class="hiddenRow" colspan="2">
-            <div class="accordian-body collapse" id="<%= "post"+report["post_id"]%>">
-              
-            </div>
-          </td>
         </tr>
       <% end %>
       </tbody>
