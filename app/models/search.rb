@@ -16,7 +16,7 @@ class Search < ApplicationRecord
         profiles.append(Profile.find_by_if(locations.profile))
       end
     else
-      profiles = Profile.where("first_name LIKE ? ", "#{keywords}") if keywords.present?
+      profiles = profiles.where("first_name LIKE ? ", "%#{keywords}") if keywords.present?
     end
     profiles
   end
