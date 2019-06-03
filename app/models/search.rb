@@ -1,26 +1,23 @@
 class Search < ApplicationRecord
   belongs_to :user
 
-  def posts
-    @post ||= find_posts
+  def profiles
+    @profiles ||= find_profiles
   end
 
   private
 
-  def find_posts
-    posts = Post.all
-    puts(posts[0])
+  def find_profiles
+    profiles = Profile.all
     if location
-      posts = posts.where("profile_location LIKE ? ","%#{keywords}") if keywords.present?
-    else
-      #posts = posts.where("user.id LIKE " + User.where(), "%#{keywords}") if keywords.present?
-      profiles = Profile.where("first_name LIKE ? ", "#{keywords}") if keywords.present?
-      users = []
-      profiles.each do |profile|
-        users.append(profile.user_id)
+      profile_locations = ProfileLocation.where("location LIKE ? ", "#{keywords}").profile if keywords.present?
+      profiles = []
+      profile_locations.each do |locations|
+        profiles.append(Profile.find_by_if(locations.profile))
       end
-      posts = posts.where("user LIKE ? ", users) if users.present?
+    else
+      profiles = Profile.where("first_name LIKE ? ", "#{keywords}") if keywords.present?
     end
-    posts
+    profiles
   end
 end

@@ -2,9 +2,8 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:create, :update]
 
-  $new_comment = ""
   $current_post = 0
-  
+
   # GET /profiles
   # GET /profiles.json
   def index
@@ -24,6 +23,7 @@ class ProfilesController < ApplicationController
       @comments[post.id] = Comment.get_post_comments(post.id)
     end
     @new_post = Post.new
+    @new_comment = ""
   end
 
   # GET /profiles/new
@@ -69,7 +69,7 @@ class ProfilesController < ApplicationController
   end
 
   def new_comment
-    comment = Comment.create(post: Post.find_by_id(params[:current_post]) , user: current_user, comment: $new_comment)
+    comment = Comment.create(post: Post.find_by_id(params[:current_post]) , user: current_user, comment: params[:new_comment])
     redirect_back(fallback_location: root_path)
   end
 

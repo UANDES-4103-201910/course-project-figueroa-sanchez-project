@@ -115,7 +115,7 @@
                             <ul class="list-grouṕ">
                               <% if @comments[post.id].present? %>
                                 <% @comments[post.id].each do |comment|%>
-                                  <h5>Comment:</h5>
+                                  <p></p>
                                   <% if Profile.find_by_id(comment['user_profile_id']).image.present? %>
                                     <%= image_tag(Profile.find_by_id(comment['user_profile_id']).image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "30x30") %>
                                   <% else %>
@@ -132,12 +132,13 @@
                               <% end %>
                             </ul>
                             <div class="card card-body">
-                              <%= form_for($new_comment) do |form| %>
-                                <%= form.text_area :new_comment %>
-                                <a class="btn btn-dark" id="new_comment<%= post.id %>" href="<%= new_comment_prof_path(:current_post => post.id) %>">
-                                  New Comment
-                                </a>
-                              <% end %>
+                              <textarea id="comment_post<%= post.id %>" name="<%= @new_comment %>">
+                                <%= @new_comment %>
+                              </textarea>
+                              <a class="btn btn-dark" id="new_comment<%= post.id %>"
+                                 href="<%= new_comment_prof_path(:current_post => post.id, :comment => @new_comment) %>">
+                                New Comment
+                              </a>
                             </div>
                           </div>
                         </div>

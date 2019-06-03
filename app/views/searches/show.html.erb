@@ -1,8 +1,14 @@
+<div class="jumbotron">
+  <h1>Search Results</h1>
+  <% if @profiles.present? %>
+    <%= @profiles.each do |profile| %>
+      <a href="/profile/<%= profile.id %>"> <%= profile.first_name + " " + profile.last_name %> </a>
+    <% end %>
+  <% else %>
+    <h5> No users found</h5>
+  <% end %>
+
+</div>
 
 
-<h1>Search Results</h1>
-
-<%= @search.posts.each do |post| %>
-  <%= post %>
-<% end %>
 

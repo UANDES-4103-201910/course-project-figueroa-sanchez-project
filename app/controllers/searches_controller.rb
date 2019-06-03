@@ -21,7 +21,7 @@ class SearchesController < ApplicationController
 
   def show
     @search = Search.find(params[:id])
-    @posts = @search.posts
+    @profiles = @search.profiles
   end
 
 
