@@ -7,12 +7,10 @@ class BlackListsController < ApplicationController
     black_list_raw = BlackList.all
     @black_list = Array.new
     black_list_admin = AdminBlackList.all
-    admins_mails = User.get_admins_mails
 
     black_list_raw.each do |item|
       user = User.find(item.user_id)
       author = black_list_admin.where(black_list_id: item.id)
-
       profile = Profile.where(user_id: item.user_id).first
       black_item = Hash.new
       black_item["black_list_id"] = item.id
@@ -21,11 +19,6 @@ class BlackListsController < ApplicationController
       black_item["last_name"] = profile.last_name
       black_item["email"] = user.email
       black_item["is_active"] = user.is_active
-      if author.length != 0
-        black_item["author"] = admins_mails[author.first.user_id]
-      else
-        black_item["author"] = ""
-      end
       @black_list << black_item
     end
   end
@@ -47,7 +40,16 @@ class BlackListsController < ApplicationController
   # POST /black_lists
   # POST /black_lists.json
   def create
-    @black_list = BlackList.new(user_id: params[:id])
+    user = User.find(params[:id])
+    @black_list = BlackList.new(user_id: user.id)
+    user_posts = user.posts
+    user_posts.each do |post|
+      if post.is_innapropiate?
+        if not post.is_in_dumpster?
+          Dumpster.create(post_id: post.id)
+        end
+      end
+    end
     respond_to do |format|
       if @black_list.save
         format.html {redirect_back(fallback_location: black_list_path); flash[:success] = "User successfully blacklisted."}
@@ -55,6 +57,7 @@ class BlackListsController < ApplicationController
         format.html {redirect_back(fallback_location: black_list_path); flash[:danger] = "User is already in the blacklist."}
       end
     end
+
   end
 
   # PATCH/PUT /black_lists/1
@@ -75,8 +78,12 @@ class BlackListsController < ApplicationController
   # DELETE /black_lists/1.json
   def destroy
     @black_list = BlackList.find(params[:id])
+    user = User.find(@black_list.user_id)
     respond_to do |format|
-      if @black_list.destroy
+      if not user.is_active
+        format.html {redirect_back(fallback_location: black_list_path); flash[:danger] = 'Error: The user is banned'}
+
+      elsif @black_list.destroy
         format.html {redirect_back(fallback_location: black_list_path); flash[:success] = 'User removed from Blacklist'}
       else
         format.html {redirect_back(fallback_location: black_list_path); flash[:danger] = 'Error removing from blacklist'}

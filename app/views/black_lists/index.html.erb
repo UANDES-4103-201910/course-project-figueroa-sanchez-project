@@ -1,7 +1,14 @@
+<%= javascript_include_tag 'black_lists', 'data-turbolinks-track': 'reload' %>
 <div class="d-lg-flex p-3 justify-content-md-center">
   <div class="jumbotron" style="width:100%">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <input class="form-control" id="blackListSearcher" onkeyup="searchInBlackList()" placeholder="Search">
+      </div>
+    </div>
     <br>
-    <table class="table table-striped table-dark">
+    <table id="blackListTable" class="table table-striped table-dark">
       <thead>
       <th>Status</th>
       <th>First name</th>
@@ -25,9 +32,9 @@
           <td><%= user["author"] %></td>
           <td>
             <%= link_to 'Ban user', ban_user_path(user["id"]), method: :post,
-                        data: {confirm: "You are going to remove this user from Blacklist. Are you sure?"}, class: "btn btn-outline-danger" %>
+                        data: {confirm: "You are going to Ban this user. Are you sure?"}, class: "btn btn-outline-danger" %>
             <%= link_to 'Remove', black_list_path(user["black_list_id"]),
-                        method: :delete, data: {confirm: "You are going to Ban this user. Are you sure?"}, class: "btn btn-outline-light" %>
+                        method: :delete, data: {confirm: "You are going to remove this user from Blacklist. Are you sure?"}, class: "btn btn-outline-light" %>
           </td>
         </tr>
       <% end %>

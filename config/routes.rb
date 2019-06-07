@@ -19,14 +19,15 @@ Rails.application.routes.draw do
   get 'recover_password/index'
   get 'profile_view/index'
   get 'login/index'
+  post 'users/create_admin', to:'users#create_admin'
   root :to => 'home#home'
   resources :black_lists
   resources :admin_locations
-  resources :reports
   resources :comments
   resources :shared_posts
   resources :dumpsters
   resources :profiles
+  resources :reports
   resources :login
   resources :searches
   resources :profile_view
@@ -35,7 +36,10 @@ Rails.application.routes.draw do
   post '/user_roles/:id', to: 'user_roles#create', as: 'make_admin'
   post '/black_list/:id', to: 'black_lists#create', as: 'black_list_user'
   post '/ban_users/:id', to: 'users#ban_user', as: 'ban_user'
-  resources :users, :posts
+  resources :users
+  resources :posts do
+    resources :reports
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

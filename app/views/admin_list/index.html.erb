@@ -41,7 +41,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <%= form_tag("/users", method: "POST") do |form|  %>
+        <%= form_tag("/users/create_admin", method: "POST") do |form|  %>
           <div class="form-group">
             <label for="user[email]">Email</label>
             <%= text_field(:user, :email, class: "form-control") %>
@@ -59,7 +59,7 @@
           </div>
 
           <div class="actions">
-            <%= submit_tag("Update", :class=>"btn btn-outline-primary") %>
+            <%= submit_tag("Create", :class=>"btn btn-outline-primary") %>
           </div>
         <% end %>
       </div>
