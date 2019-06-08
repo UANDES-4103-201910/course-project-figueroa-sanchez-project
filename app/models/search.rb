@@ -10,13 +10,13 @@ class Search < ApplicationRecord
   def find_profiles
     profiles = Profile.all
     if location
-      profile_locations = ProfileLocation.where("location LIKE ? ", "#{keywords}").profile if keywords.present?
+      profile_locations = ProfileLocation.where("location LIKE ?", "%#{keywords}").profile if keywords.present?
       profiles = []
       profile_locations.each do |locations|
         profiles.append(Profile.find_by_if(locations.profile))
       end
     else
-      profiles = profiles.where("first_name LIKE ? ", "%#{keywords}") if keywords.present?
+      profiles = profiles.where("first_name LIKE ?", "%#{keywords}") if keywords.present?
     end
     profiles
   end

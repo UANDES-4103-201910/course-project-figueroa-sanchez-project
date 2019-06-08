@@ -94,10 +94,10 @@
       <li class="list-group-item">
         <div class="media-body">
           <div class="media mt-3">
-            <% if Profile.find_by_id(comment['user_profile_id']).image.present? %>
+            <% if Profile.find_by_id(comment['user_profile_id']).image.attached? %>
               <%= image_tag(Profile.find_by_id(comment['user_profile_id']).image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
             <% else %>
-              <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="50x50">
+              <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" sizes="50x50">
             <% end %>
             <div class="media-body">
               <a href="/profiles/<%= comment['user_profile_id'] %>">

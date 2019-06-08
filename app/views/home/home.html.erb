@@ -51,7 +51,11 @@
           <a href="/post_view/<%= post['id'] %>" class="list-group-item list-group-item-action">
             <div class="media-body">
               <div class="media mt-3">
-                <%= image_tag(Profile.find_by_user_id(post.user).image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "120x120") %>
+                <% if post['user_image'].present? %>
+                  <%= image_tag(post['user_image'], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "120x120") %>
+                <% else %>
+                  <img src="ditto.gif" class="avatar img-circle img-thumbnail" alt="avatar" sizes="120x120">
+                <% end %>
                 <div class="media-body">
                   <h5 class="mt-0"><%= post["title"] %></h5>
                   <%= post["description"] %>
