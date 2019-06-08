@@ -10,12 +10,14 @@ class DumpstersController < ApplicationController
       dumped_post = Hash.new
       post = Post.find(dumped.post_id)
       dumped_post["id"] = post.id
+      dumped_post["dumped_id"] = dumped.id
       dumped_post["title"] = post.title
       dumped_post["author"] = post.author
       dumped_post["dumped_date"] = dumped.created_at
       dumped_post["creation_date"] = post.created_at
       @dumped_posts << dumped_post
     end
+
   end
 
   # GET /dumpsters/1
@@ -67,8 +69,7 @@ class DumpstersController < ApplicationController
   def destroy
     @dumpster.destroy
     respond_to do |format|
-      format.html { redirect_to dumpsters_url, notice: 'Dumpster was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_back(fallback_location: dumpster_path); flash[:success] = "Post removed from dumpster"}
     end
   end
 

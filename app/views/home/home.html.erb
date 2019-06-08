@@ -1,72 +1,43 @@
-<div class="container d-xl-flex">
-  <div class="col-6">
-    <% if @top_5_post %>
-      <div class="jumbotron justify-content-md-center text-center">
-        <h2>Global News Highlights</h2>
-        <div id="carouselHome" class="carousel slide" data-ride="carousel">
-          <ul class="carousel-indicators">
-            <li data-target="#carouselHome" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselHome" data-slide-to="1"></li>
-            <li data-target="#carouselHome" data-slide-to="2"></li>
-            <li data-target="#carouselHome" data-slide-to="3"></li>
-            <li data-target="#carouselHome" data-slide-to="4"></li>
-          </ul>
-          <div class="carousel-inner">
-            <% @top_5_post.each do |post| %>
-              <% if @top_5_post.index(post) == 1 %>
-                <div class="carousel-item active">
-                  <div style="background-color: #666666;width: 500px ;height: 500px"></div>
-                  <div class="carousel-caption">
-                    <h3><%= post["title"] %></h3>
-                    <p><%= post["description"] %></p>
-                  </div>
-                </div>
-              <% else %>
-                <div class="carousel-item">
-                  <div style="background-color: #666666;width: 500px;height: 500px"></div>
-                  <div class="carousel-caption">
-                    <h3><%= post["title"] %></h3>
-                    <p><%= post["description"] %></p>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-          <a class="carousel-control-prev" href="#carouselHome" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselHome" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <div class="col-6">
-    <div class="list-group">
-      <% if @top_20_post %>
-        <% @top_20_post.each do |post| %>
-          <a href="/post_view/<%= post['id'] %>" class="list-group-item list-group-item-action">
-            <div class="media-body">
-              <div class="media mt-3">
-                <% if post['user_image'].present? %>
-                  <%= image_tag(post['user_image'], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "120x120") %>
-                <% else %>
-                  <img src="ditto.gif" class="avatar img-circle img-thumbnail" alt="avatar" sizes="120x120">
-                <% end %>
-                <div class="media-body">
-                  <h5 class="mt-0"><%= post["title"] %></h5>
-                  <%= post["description"] %>
-                </div>
-                <small><%= post['date'] %></small>
-              </div>
-              <small>Votes: <%= post['total_votes'] %> </small>
-            </div>
-          </a>
-        <% end %>
+<div class="container justify-content-md-center">
+  <div class="jumbotron">
+    <ul class="nav nav-tabs" id="homeTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="#top20posts" id="top20posts-tab" role="tab" data-toggle="tab" aria-controls="top20posts" aria-selected="true">Active</a>
+      </li>
+      <% unless current_user.nil? %>
+      <li class="nav-item">
+            <a class="nav-link" href="#followingposts" id="followingposts-tab" role="tab" data-toggle="tab" aria-controls="followingposts" aria-selected="false">Following
+            posts</a>
+      </li>
       <% end %>
+    </ul>
+    <div class="tab-content" i="homeTabContent">
+      <div class="tab-pane fade show active list-group" id="top20posts" role="tabpanel" aria-labelledby="top20posts-tab" >
+        <% if @top_20_post %>
+          <% @top_20_post.each do |post| %>
+            <a href="/posts/<%= post['id'] %>" class="list-group-item list-group-item-action">
+              <div class="media-body">
+                <div class="media mt-3">
+                  <% if post["author_image"].attached? %>
+                    <%= image_tag(post["author_image"], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                  <% else %>
+                    <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
+                  <% end %>
+                  <div class="media-body">
+                    <h5 class="mt-0"><%= post["title"] %></h5>
+                    <%= post["description"] %>
+                  </div>
+                  <small><%= post['date'] %></small>
+                </div>
+                <small>Votes: <%= post['votes']['up'] + post['votes']['down'] %> </small>
+              </div>
+            </a>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="tab-pane fade link-list" id="followingposts" role="tabpanel" aria-label="followingposts-tab">
+        holi
+      </div>
     </div>
   </div>
 </div>

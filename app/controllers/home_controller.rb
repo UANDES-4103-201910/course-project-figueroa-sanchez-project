@@ -40,6 +40,7 @@ class HomeController < ApplicationController
         n_post["date"] = post.created_at
         n_post["author_name"] = profile.first_name + " " + profile.last_name
         n_post["author_id"] = post.user_id
+        n_post["author_image"] = Profile.find_by_user_id(n_post['author_id']).image
         n_post["votes"] = post.get_votes
         @top_20_post << n_post
       end

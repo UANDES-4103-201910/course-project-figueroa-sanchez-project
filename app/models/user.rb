@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :follow_posts
 
 
+
   def self.users_by_roles
     user_roles = UserRole.all
     all_users = User.all
@@ -51,7 +52,6 @@ class User < ApplicationRecord
     end
   end
 
-
   def is_super_admin?
     super_admin_role = UserRole.where(user_id: id, role_id: 3)
     if super_admin_role.length > 0
@@ -68,15 +68,6 @@ class User < ApplicationRecord
       roles << r.role_id
     end
     roles.max
-  end
-
-  def self.get_admins_mails
-    admins_ids = UserRole.where(role_id: 2)
-    admins = Hash.new
-    admins_ids.each do |role|
-      admins[role.id] = User.find(role.id).email
-    end
-    admins
   end
 
   def get_geofences

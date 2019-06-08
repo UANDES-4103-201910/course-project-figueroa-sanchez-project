@@ -26,6 +26,7 @@ class ReportsController < ApplicationController
   # GET /reports/new
   def new
     @report = Report.new
+    @post = Post.find(params[:post_id])
   end
 
   # GET /reports/1/edit
@@ -35,15 +36,17 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
-    @report = Report.new(report_params)
-
+    r_params = report_params
+    r_params[:user] = current_user
+    r_params[:post] = Post.find(params["post_id"])
+    category = ReportCategory.find(r_params[:report_category].to_i)
+    r_params[:report_category] = category
+    @report = Report.new(r_params)
     respond_to do |format|
       if @report.save
-        format.html { redirect_to @report, notice: 'Report was successfully created.' }
-        format.json { render :show, status: :created, location: @report }
+        format.html {redirect_back(fallback_location: root_path); flash[:success] = "Post successfully reported"}
       else
-        format.html { render :new }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
+        format.html {redirect_back(fallback_location: root_path); flash[:danger] = "Error reporting post"}
       end
     end
   end

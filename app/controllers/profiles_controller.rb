@@ -13,9 +13,15 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    @profile = Profile.where(user_id:params[:id]).first
-    @user = User.find(params[:id])
-    @posts = Post.where(user_id: params[:id]).order(created_at: :desc)
+    @profile = Profile.find(params[:id])
+    @user = User.find(@profile.user_id)
+    @posts_raw = Post.where(user_id: @user.id).order(created_at: :desc)
+    @posts = Array.new
+    @posts_raw.each do |post|
+      if not post.is_in_dumpster?
+        @posts << post
+      end
+    end
     @votes = Hash.new
     @comments = Hash.new
     @posts.each do |post|

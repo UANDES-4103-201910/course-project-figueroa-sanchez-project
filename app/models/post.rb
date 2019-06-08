@@ -21,6 +21,23 @@ class Post < ApplicationRecord
     posts_ordered_by_votes
   end
 
+  def is_innapropiate?
+    report_count = Report.where(post_id: id).length
+    if report_count>=3
+      true
+    else
+      false
+    end
+  end
+
+  def is_in_dumpster?
+    if Dumpster.where(post_id: id).length>0
+      true
+    else
+      false
+    end
+  end
+
   def self.get_posts_votes
     posts = Post.all
     validations = Validation.group(:post_id).sum(:vote)
@@ -44,6 +61,12 @@ class Post < ApplicationRecord
     votes_hash = Hash.new
     votes_hash["up"] = votes[1]
     votes_hash["down"] = votes[-1]
+    if votes_hash["up"].nil?
+      votes_hash["up"] = 0
+    end
+    if votes_hash["down"].nil?
+      votes_hash["down"] = 0
+    end
     votes_hash
   end
 
@@ -92,11 +115,12 @@ class Post < ApplicationRecord
     post_info["description"] = post.description
     post_info["solved"] = post.solved
     post_info["date"] = post.created_at.to_date
-    post_info["user_first_name"] = Profile.find(post.user_id).first_name
-    post_info["user_last_name"] = Profile.find(post.user_id).last_name
-    post_info["user_image"] =  Profile.find(post.user_id).image
+    post_info["user_id"] = post.user_id
+    user_profile = Profile.find_by_user_id(post.user_id)
+    post_info["user_first_name"] = user_profile.first_name
+    post_info["user_last_name"] = user_profile.last_name
+    post_info["user_image"] =  user_profile.image
     post_info['votes'] = post.get_votes
-    post_info['total_votes'] = Post.get_posts_votes[post.id]
     post_info['images'] = post.images
     post_info['files'] = post.files
     post_info

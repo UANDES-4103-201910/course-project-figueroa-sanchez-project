@@ -36,10 +36,14 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+
+  end
+
+  def create_admin
     @user = User.new(user_params)
-    UserRole.create(role_id:1, user_id:@user.id)
-    UserRole.create(role_id:2, user_id:@user.id)
+
     if @user.save
+      UserRole.create(role_id:2, user_id:@user.id)
       redirect_back(fallback_location: root_path); flash[:success] = "Administrator successfully created"
     else
       redirect_back(fallback_location: root_path); flash[:danger] = "Error creating administrator"

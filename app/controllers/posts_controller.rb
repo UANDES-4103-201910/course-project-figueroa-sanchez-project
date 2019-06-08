@@ -36,11 +36,9 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
+        format.html {redirect_back(fallback_location: profile_path(@current_profile.id)); flash[:success] = 'Post created'}
       else
-        format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        format.html {redirect_back(fallback_location: profile_path(@current_profile.id)); flash[:danger] = 'Error creating post'}
       end
     end
   end

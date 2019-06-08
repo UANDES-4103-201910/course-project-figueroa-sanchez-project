@@ -1,4 +1,4 @@
-<%= form_with(model: report, local: true) do |form| %>
+<%= form_with(model: @report, url: [@post, @report]) do |form| %>
   <% if report.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(report.errors.count, "error") %> prohibited this report from being saved:</h2>
@@ -10,28 +10,37 @@
       </ul>
     </div>
   <% end %>
-
+  Category
   <div class="field">
-    <%= form.label :user %>
-    <%= form.text_field :user %>
+    <%= form.hidden_field :user, value: " "%>
   </div>
 
   <div class="field">
-    <%= form.label :post %>
-    <%= form.text_field :post %>
+    <%= form.hidden_field :post, value: " " %>
   </div>
 
-  <div class="field">
-    <%= form.label :report_category %>
-    <%= form.text_field :report_category %>
+  <div class="form-check">
+    <%= form.radio_button(:report_category, '1', class: "form-check-input") %> Inappropiate content
   </div>
-
-  <div class="field">
+  <div class="form-check">
+    <%= form.radio_button(:report_category, '2', class: "form-check-input") %> Spam
+  </div>
+  <div class="form-check">
+    <%= form.radio_button(:report_category, '3', class: "form-check-input") %> Personal advertising
+  </div>
+  <div class="form-check">
+    <%= form.radio_button(:report_category, '4', class: "form-check-input") %> Sexual harassment
+  </div>
+  <div class="form-check">
+    <%= form.radio_button(:report_category, '5', class: "form-check-input") %> Other
+  </div>
+  <br>
+  <div class="form-group">
     <%= form.label :comment %>
-    <%= form.text_area :comment %>
+    <%= form.text_area :comment, class:"form-control" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Report', :class =>"btn btn-outline-warning btn-block" %>
   </div>
 <% end %>

@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
-
 <header>
-  <div style="margin-bottom: 20px">
+
+  <div id="header" style="margin-bottom: 20px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="/">M.A.P.I.</a>
       <div class="navbar-collapse">
@@ -22,9 +22,9 @@
               <input class="form-control" type="search" placeholder="Search" aria-label="Search">
               <div class="input-group-append">
                 <a href="/searches">
-                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit" >
-                  <i class="fas fa-search"></i>
-                </button>
+                  <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
                 </a>
               </div>
             </div>
@@ -37,7 +37,7 @@
           <% if user_signed_in? %>
             <li class="nav-item">
               <% if current_user.is_super_admin? %>
-                <a class="text-white" href="<%= super_admin_home_path %>">System</a>
+                <a class="text-white nav-link" href="<%= super_admin_home_path %>">System</a>
               <% elsif current_user.is_admin? %>
                 <a class="text-white nav-link" href="<%= admin_home_path %>">Administration</a>
               <% end %>
@@ -51,12 +51,13 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <% if @current_profile %>
-                    <a class="dropdown-item" href="/profiles/<%= Profile.find_by_user_id(current_user).id  %>">Profile</a>
-                    <a class="dropdown-item" href="/profiles/<%= Profile.find_by_user_id(current_user).id  %>/edit" >Edit profile</a>
-                    <a class="dropdown-item" href="/posts/" >My Posts</a>
-                    <a class="dropdown-item" href="/follow_posts" >My Following Posts</a>
+                    <a class="dropdown-item" href="/profiles/<%= Profile.find_by_user_id(current_user).id %>">Profile</a>
+                    <a class="dropdown-item" href="/profiles/<%= Profile.find_by_user_id(current_user).id %>/edit">Edit
+                      profile</a>
+                    <a class="dropdown-item" href="/posts/">My Posts</a>
+                    <a class="dropdown-item" href="/follow_posts">My Following Posts</a>
                     <div class="dropdown-divider"></div>
-                <% end %>
+                  <% end %>
                   <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "dropdown-item") %>
                 </div>
               </div>
@@ -70,32 +71,41 @@
       </div>
     </nav>
   </div>
-
 </header>
-<body>
+<body id="page-container">
 <div class="container">
   <% flash.each do |key, value| %>
     <% if key == "alert" %>
-      <div class="alert alert-warning"><%= value %></div>
+      <div class="alert alert-warning">
+        <%= value %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
     <% elsif key == "notice" %>
-      <div class="alert alert-success"><%= value %></div>
+      <div class="alert alert-success">
+        <%= value %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
     <% else %>
-      <div class="alert alert-<%= key %>"><%= value %></div>
+      <div class="alert alert-<%= key %>">
+        <%= value %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
     <% end %>
-  <% end %>
+<% end %>
 </div>
 <p></p>
-<%= yield %>
+<div id="content-wrap">
+  <%= yield %>
+</div>
 </body>
-<footer class="page-footer font-small unique-color-dark pt-4">
-  <ul class="list-unstyled list-inline text-center py-2">
-    <li class="list-inline-item">
-      <h5 class="mb-1">Register for free</h5>
-    </li>
-    <li class="list-inline-item">
-      <a href="/users/sign_up" class="btn btn-outline-dark">Sign up!</a>
-    </li>
-  </ul>
-  </div>
-</footer>
+
+
+
+
 </html>

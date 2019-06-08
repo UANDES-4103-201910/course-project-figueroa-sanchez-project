@@ -4,12 +4,12 @@
     <div class="col-sm-4">
 
       <div class="card mb-3" style="max-width: 540px;">
-        <div class="row no-gutters">
-          <div class="col-md-4  d-flex align-items-center">
-            <% if @profile.image.present? %>
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <% if @profile.image.attached? %>
               <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "120x120") %>
             <% else %>
-              <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="120x120">
+              <img class="img-thumbnail img-fluid" src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar">
             <% end %>
           </div>
           <div class="col-md-8">
@@ -42,12 +42,11 @@
     <div class="col-sm-8">
 
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
+      <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#create-post-modal">
         New Post
       </button>
 
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="create-post-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -69,93 +68,93 @@
             <% @posts.each do |post| %>
               <li class="list-group-item">
                 <div class="card mb-3">
-                  <div class="card-header">
-                    <div class="row">
-                      <div class="col-md-10">
-                        <% if @profile.image.present? %>
-                          <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
-                        <% else %>
-                          <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="50x50">
-                        <% end %>
-                        <a href="#">
-                          <%= @profile.first_name %>
-                        </a>
-                      </div>
-                      <div class="col-md-2 text-center">
-                        <small><%= post.created_at.to_date %></small>
-                      </div>
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <% if @profile.image.attached? %>
+                        <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                      <% else %>
+                        <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" class="post-user-image">
+                      <% end %>
+                      <a href="#">
+                        <%= @profile.first_name %>
+                      </a>
                     </div>
-                  </div>
-                  <div class="card-body text-left">
-                    <div class="row">
-                      <div class="col-md-10">
-                        <a href="<%= post_path(post.id) %>" class="btn-outline-warning"><h5 class="card-title"><%= post.title %></h5></a>
-                      </div>
-                      <div class="col-md-2 text-center">
-                        <% if post.solved %>
-                          <i class="fas fa-check fa-2x"></i>
-                        <% end %>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <p class="card-text"><%= post.description %></p>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="card-footer">
-                    <div class="row">
-                      <div class="col-sm-8">
-                        <a class="btn btn-dark" data-toggle="collapse" href="#collapseExample<%= post.id %>" role="button" aria-expanded="false" aria-controls="collapseExample<%= post.id %>">
-                          Comments
-                        </a>
-                        <div class="collapse" id="collapseExample<%= post.id %>">
-                          <div class="card card-body">
-                            <ul class="list-grouṕ">
-                              <% if @comments[post.id].present? %>
-                                <% @comments[post.id].each do |comment|%>
-                                  <p></p>
-                                  <% if Profile.find_by_id(comment['user_profile_id']).image.attached? %>
-                                    <%= image_tag(Profile.find_by_id(comment['user_profile_id']).image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "30x30") %>
-                                  <% else %>
-                                    <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" sizes="30x30">
-                                  <% end %>
-                                  <a href="<%= profile_path(comment['user_profile_id']) %>">
-                                    <%= Profile.find_by_id(comment['user_profile_id']).first_name + " " +
-                                            Profile.find_by_id(comment['user_profile_id']).last_name %>
-                                  </a>
-                                  <%= comment['text'] %>
-                                <% end %>
-                              <% else %>
-                                <p> No comments yet </p>
-                              <% end %>
-                            </ul>
-                            <div class="card card-body">
-                              <textarea id="comment_post<%= post.id %>" name="<%= @new_comment %>">
-                                <%= @new_comment %>
-                              </textarea>
-                              <a class="btn btn-dark" id="new_comment<%= post.id %>"
-                                 href="<%= new_comment_prof_path(:current_post => post.id, :comment => @new_comment) %>">
-                                New Comment
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-4 text-right">
-                        <%= @votes[post.id]["up"] %>
-                        <a class="btn">
-                          <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
-                        </a>
-                        <%= @votes[post.id]["down"] %>
-                        <a class="btn">
-                          <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
-                        </a>
-                      </div>
+                    <div class="col-md-2 text-center">
+                      <small><%= post.created_at.to_date %></small>
                     </div>
                   </div>
                 </div>
+                <div class="card-body text-left">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <a href="<%= post_path(post.id) %>" class="btn-outline-warning"><h5 class="card-title"><%= post.title %></h5></a>
+                    </div>
+                    <div class="col-md-2 text-center">
+                      <% if post.solved %>
+                        <i class="fas fa-check fa-2x"></i>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p class="card-text"><%= post.description %></p>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <a class="btn btn-dark" data-toggle="collapse" href="#collapseExample<%= post.id %>" role="button" aria-expanded="false" aria-controls="collapseExample<%= post.id %>">
+                        Comments
+                      </a>
+                      <div class="collapse" id="collapseExample<%= post.id %>">
+                        <div class="card card-body">
+                          <ul class="list-group">
+                            <% if @comments[post.id].present? %>
+                              <% @comments[post.id].each do |comment|%>
+                                <p></p>
+                                <% if Profile.find_by_id(comment['user_profile_id']).image.attached? %>
+                                  <%= image_tag(Profile.find_by_id(comment['user_profile_id']).image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "30x30") %>
+                                <% else %>
+                                  <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="30x30">
+                                <% end %>
+                                <a href="<%= profile_path(comment['user_profile_id']) %>">
+                                  <%= Profile.find_by_id(comment['user_profile_id']).first_name + " " +
+                                          Profile.find_by_id(comment['user_profile_id']).last_name %>
+                                </a>
+                                <%= comment['text'] %>
+                              <% end %>
+                            <% else %>
+                              <p> No comments yet </p>
+                            <% end %>
+                          </ul>
+                          <div class="card card-body">
+                              <textarea id="comment_post<%= post.id %>" name="<%= @new_comment %>">
+                                <%= @new_comment %>
+                              </textarea>
+                            <a class="btn btn-dark" id="new_comment<%= post.id %>"
+                               href="<%= new_comment_prof_path(:current_post => post.id, :comment => @new_comment) %>">
+                              New Comment
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 text-right">
+                      <%= @votes[post.id]["up"] %>
+                      <a class="btn">
+                        <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
+                      </a>
+                      <%= @votes[post.id]["down"] %>
+                      <a class="btn">
+                        <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
               </li>
             <% end %>
           </ul>

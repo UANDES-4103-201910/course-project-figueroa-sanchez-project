@@ -1,4 +1,4 @@
-<%=javascript_include_tag 'post.js' %>
+<%= javascript_include_tag 'post.js' %>
 <div class="container justify-content-xl-center">
   <ul class="list-group ">
     <li class="list-group-item">
@@ -6,15 +6,19 @@
         <div class="card-header">
           <div class="row">
             <div class="col-md-10">
-              <%= image_tag(@post['user_image'], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+              <% if @post['user_image'].present? %>
+                <%= image_tag(@post['user_image'], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+              <% else %>
+                <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
+              <% end %>
               <a href="#">
                 <%= @post['user_first_name'] + ' ' + @post['user_last_name'] %>
               </a>
             </div>
             <div class="col-md-2 text-center">
-              <small><%=@post['date'] %></small>
+              <small><%= @post['date'] %></small>
               <br>
-              <a href="/report_post/<%= @post['id'] %>">
+              <a href="<%= @post['id'] %>/reports/new">
                 <small>Report</small>
               </a>
             </div>
@@ -23,7 +27,7 @@
         <div class="card-body text-left">
           <div class="row">
             <div class="col-md-10">
-              <h5 class="card-title"><%=@post['title'] %></h5>
+              <h5 class="card-title"><%= @post['title'] %></h5>
             </div>
             <div class="col-md-2 text-center">
               <% if @post['solved'] %>
@@ -33,7 +37,7 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <p class="card-text"><%=@post["description"] %></p>
+              <p class="card-text"><%= @post["description"] %></p>
             </div>
             <div>
               <% if @post['images'].present? %>
@@ -50,7 +54,7 @@
                 </ul>
                 </p>
               <% end %>
-              <% if@post['files'].present? %>
+              <% if @post['files'].present? %>
                 <p>
                   <strong>File:</strong>
                   <br>
@@ -75,7 +79,7 @@
             </div>
             <div class="col-sm-4 text-right">
               <%= @post['votes']['up'] %>
-              <a class="btn"  id="vote-up" href="<%= vote_up_path %>">
+              <a class="btn" id="vote-up" href="<%= vote_up_path %>">
                 <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
               </a>
               <%= @post['votes']['down'] %>
@@ -97,7 +101,7 @@
             <% if Profile.find_by_id(comment['user_profile_id']).image.attached? %>
               <%= image_tag(Profile.find_by_id(comment['user_profile_id']).image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
             <% else %>
-              <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" sizes="50x50">
+              <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="50x50">
             <% end %>
             <div class="media-body">
               <a href="/profiles/<%= comment['user_profile_id'] %>">
