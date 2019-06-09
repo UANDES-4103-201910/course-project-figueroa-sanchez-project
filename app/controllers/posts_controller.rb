@@ -3,7 +3,6 @@ class PostsController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authenticate_user!
   $current_post = 0
-  $new_comment = ""
   # GET /posts
   # GET /posts.json
   def index
@@ -16,6 +15,7 @@ class PostsController < ApplicationController
     @post = Post.get_post(params[:id])
     $current_post = @post['id']
     @comments = Comment.get_post_comments(params[:id])
+    @new_comment = Comment.new(user_id: current_user.id, post_id: params[:id])
   end
 
   # GET /posts/new

@@ -115,12 +115,8 @@
       </li>
     <% end %>
     <div class="card card-body">
-      <%= form_for($new_comment) do |form| %>
-        <%= form.text_area :new_comment %>
-        <a class="btn btn-dark" id="new_comment" href="<%= new_comment_post_path %>">
-          New Comment
-        </a>
-      <% end %>
+      <%= render './comments/form', comment: @new_comment %>
+
     </div>
   </ul>
 </div>
