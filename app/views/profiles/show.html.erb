@@ -168,7 +168,55 @@
         </ul>
         <div class="tab-content" id="PostsTabContent">
           <div class="tab-pane fade show active list-group" id="shared-posts" role="tabpanel" aria-label="shared-posts-tab">
-            shared posts
+            <% if @shared_posts.length > 0 %>
+              <% @shared_posts.each do |post| %>
+                <a href="/posts/<%= post['id'] %>" class="list-group-item list-group-item-action">
+                  <div class="media-body">
+                    <div class="media mt-3">
+                      <% if post["author_image"].attached? %>
+                        <%= image_tag(post["author_image"], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                      <% else %>
+                        <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
+                      <% end %>
+                      <div class="media-body">
+                        <h5 class="mt-0"><%= post["title"] %></h5>
+                        <div class="row">
+                          <div class="col-md-10">
+                            <%= post["description"] %>
+                          </div>
+                          <div class="col-md-1">
+                            <% if post['solved'] %>
+                              <i class="fas fa-check fa-2x"></i>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                      <small><%= post['date'] %></small>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                      </div>
+                      <div class="col-md-2">
+                        <small>
+                          <%= post['votes']['up']%> <i class="fas fa-thumbs-up "></i>
+                        </small>
+                      </div>
+                      <div class="col-md-2">
+                        <small>
+                          <%= post['votes']['down'] %> <i class="fas fa-thumbs-down "></i>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              <% end %>
+            <% else %>
+              <p>
+              <h6>
+                This profile doesn't have any <strong>shared posts</strong>.
+              </h6>
+              </p>
+            <% end %>
           </div>
           <div class="tab-pane fade list-group" id="voted-posts" role="tabpanel" aria-label="voted-posts-tab">
             voted posts

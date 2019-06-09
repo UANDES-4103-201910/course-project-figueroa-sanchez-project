@@ -31,13 +31,26 @@ class ProfilesController < ApplicationController
     @new_post = Post.new
     @new_comment = ""
     @following_posts = Array.new
-    follow_post_current_user = FollowPost.all
-    if follow_post_current_user.length > 0
-      follow_post_first = follow_post_current_user.where(user_id: @user.id).first
+    @shared_posts = Array.new
+    @voted_posts = Array.new
+
+    all_shared_posts = SharedPost.all
+    all_follow_posts = FollowPost.all
+
+    if all_follow_posts.length > 0
+      follow_post_first = all_follow_posts.where(user_id: @user.id).first
     end
     if follow_post_first
       @following_posts = follow_post_first.get_following_posts
     end
+
+    if all_shared_posts.length > 0
+      shared_post_first = all_shared_posts.where(user_id: @user.id).first
+    end
+    if shared_post_first
+      @shared_posts = shared_post_first.get_shared_posts
+    end
+
   end
 
   # GET /profiles/new

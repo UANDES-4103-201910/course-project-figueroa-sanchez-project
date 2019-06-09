@@ -4,7 +4,9 @@ class SharedPostsController < ApplicationController
   # GET /shared_posts
   # GET /shared_posts.json
   def index
-    @shared_posts = SharedPost.all
+    unless current_user.nil?
+      @shared_posts = SharedPost.where(user: current_user)
+    end
   end
 
   # GET /shared_posts/1
