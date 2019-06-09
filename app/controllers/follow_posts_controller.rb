@@ -5,7 +5,6 @@ class FollowPostsController < ApplicationController
   # GET /follow_posts.json
   def index
     @follow_posts = FollowPost.where(user: current_user)
-
   end
 
   # GET /follow_posts/1
