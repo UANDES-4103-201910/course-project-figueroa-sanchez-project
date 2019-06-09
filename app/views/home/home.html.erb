@@ -28,16 +28,38 @@
                   <% end %>
                   <div class="media-body">
                     <h5 class="mt-0"><%= post["title"] %></h5>
-                    <%= post["description"] %>
+                    <div class="row">
+                      <div class="col-md-11">
+                        <%= post["description"] %>
+                      </div>
+                      <div class="col-md-1">
+                        <% if post['solved'] %>
+                          <i class="fas fa-check fa-2x"></i>
+                        <% end %>
+                      </div>
+                    </div>
                   </div>
                   <small><%= post['date'] %></small>
                 </div>
-                <small>Votes: <%= post['votes']['up'] + post['votes']['down'] %> </small>
+                <div class="row">
+                  <div class="col-md-10">
+                  </div>
+                  <div class="col-md-1">
+                    <small>
+                      <%= post['votes']['up']%> <i class="fas fa-thumbs-up "></i>
+                    </small>
+                  </div>
+                  <div class="col-md-1">
+                    <small>
+                      <%= post['votes']['down'] %> <i class="fas fa-thumbs-down "></i>
+                    </small>
+                  </div>
+                </div>
               </div>
             </a>
           <% end %>
         <% else %>
-          <p><h5>Don't exist any post</h5></p>
+          <p><h5>Doesn't exist any post</h5></p>
         <% end %>
       </div>
       <div class="tab-pane fade list-group" id="followingposts" role="tabpanel" aria-label="followingposts-tab">
