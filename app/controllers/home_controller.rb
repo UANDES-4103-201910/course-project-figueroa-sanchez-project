@@ -4,7 +4,7 @@ class HomeController < ApplicationController
 
 
   def home
-    all_posts = Post.order(created_at: :desc).limit(50)
+    all_posts = Post.order(created_at: :desc)
     follow_post_current_user = FollowPost.all
     if all_posts.length == 0
       all_posts = nil

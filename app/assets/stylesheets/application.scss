@@ -15,7 +15,9 @@
 @import "bootstrap";
 @import "font-awesome";
 
-
+#map {
+  height: 100%;
+}
 .btn-outline-warning {
   color: #FFA500;
 }

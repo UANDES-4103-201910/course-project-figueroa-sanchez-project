@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   post '/user_roles/:id', to: 'user_roles#create', as: 'make_admin'
   post '/black_list/:id', to: 'black_lists#create', as: 'black_list_user'
   post '/ban_users/:id', to: 'users#ban_user', as: 'ban_user'
+  post 'admin_list/set_geofences/:id', to: 'admin_list#set_geofences'
   resources :users
   resources :posts do
     resources :reports

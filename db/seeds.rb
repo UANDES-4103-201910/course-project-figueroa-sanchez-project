@@ -6,14 +6,19 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Role.create!(name: "normal_user", description: "Interacts with the application and doesn't manages it") #id:1
-# Role.create!(name: "administrator", description: "Manages the application") #id:2
-# Role.create!(name: "super_administrator", description: "Manages the administrator accounts") #id:3
+Role.create!(name: "normal_user", description: "Interacts with the application and doesn't manages it") #id:1
+Role.create!(name: "administrator", description: "Manages the application") #id:2
+Role.create!(name: "super_administrator", description: "Manages the administrator accounts") #id:3
 ReportCategory.create(name: "Inappropiate content")
 ReportCategory.create(name: "Spam")
 ReportCategory.create(name: "Personal advertising")
 ReportCategory.create(name: "Sexual harassment")
 ReportCategory.create(name: "Other")
+Location.create(name: "Las Condes", location:"ba06b113-1c5f-4aed-8468-7fe76aaaea52")
+Location.create(name:"Vitacura", location:"5cac32ad-8f42-4637-a3a0-6dca6b0b60ae")
+Location.create(name:"Lo Barnechea", location:"79e5b583-e38d-4e41-af7f-b9fcaf655a55")
+Location.create(name:"San Carlos de Apoquindo", location:"74e81917-c9d1-44d1-94a6-c4123bc90c08")
+Location.create(name:"Universidad de los Andes", location:"6ccdf1e5-8376-481a-bb79-f308071e1608")
 # User.create!(email: "activeNormalUser1@gmail.com", password: "password1", is_active: true) #Id:1
 # User.create!(email: "activeNormalUser2@gmail.com", password: "password2", is_active: true) #Id:2
 # User.create!(email: "activeNormalUser3@gmail.com", password: "password3", is_active: true) #Id:3

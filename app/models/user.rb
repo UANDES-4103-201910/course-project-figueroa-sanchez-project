@@ -5,7 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable,
          :omniauthable, omniauth_providers: [:google_oauth2]
   has_many :admin_black_lists
-  has_many :admin_locations
   has_one :black_list
   has_many :comments
   has_many :posts
@@ -13,12 +12,12 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :profile
   has_many :reports
   has_many :user_role
-  has_many :validations
   has_many :roles, through: :user_role
+  has_many :validations
   has_many :searches
   has_many :follow_posts
-
-
+  has_many :admin_locations
+  has_many :locations, through: :admin_locations
 
   def self.users_by_roles
     user_roles = UserRole.all
@@ -70,13 +69,17 @@ class User < ApplicationRecord
     roles.max
   end
 
-  def get_geofences
-    geofences_raw = AdminLocation.where(user_id: id)
-    geofences = Array.new
-    geofences_raw.each do |geo|
-      geofences << geo.location
-    end
-    geofences
+  # def get_geofences
+  #   geofences_raw = AdminLocation.where(user_id: id)
+  #   geofences = Array.new
+  #   geofences_raw.each do |geo|
+  #     geofences << geo.location
+  #   end
+  #   geofences
+  # end
+
+  def destroy_geofences
+    AdminLocation.where(user_id:id).destroy_all
   end
 
   def self.from_omniauth(access_token)

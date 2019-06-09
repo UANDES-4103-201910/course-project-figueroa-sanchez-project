@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'admin_list', 'data-turbolinks-track': 'reload' %>
 <div class="d-lg-flex p-3 justify-content-md-center">
   <div class="jumbotron" style="width:100%">
     <div class="">
@@ -5,7 +6,9 @@
         <h2>Administrator List</h2>
       </div>
       <div class="d-flex justify-content-end">
-        <button class="btn btn-outline-primary" data-target="#new-administrator-modal" data-toggle="modal">Create administrator</button>
+        <button class="btn btn-outline-primary" data-target="#new-administrator-modal" data-toggle="modal">Create
+          administrator
+        </button>
       </div>
     </div>
 
@@ -13,19 +16,33 @@
     <table class="table table-striped">
       <thead>
       <th>E-mail</th>
-      <th>Geofences</th>
       <th>Last Access</th>
+      <th>Geofences</th>
       <th></th>
       </thead>
       <tbody>
       <% @users_info.each do |user| %>
         <tr>
           <td><%= user["email"] %></td>
-          <td><%= user["geofences"] %></td>
-          <th><%= user["last_access"] %></th>
+          <td><%= user["last_access"] %></td>
           <td>
-            <button class="btn btn-outline-success">Set geofences</button>
-            <%=link_to 'Demote admin', user_role_path(user["id"]), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger"  %>
+            <%= form_tag("admin_list/set_geofences/#{user["id"]}", method: "POST", remote: true, id:"set-geofence") do |form| %>
+              <div class="input-group">
+                <% @locations.each do |location| %>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="<%=location.name %>" type="checkbox" id="location<%=location.id %>" value="<%= location.id %>"
+                           <% if user["geofences"].exists?(location.id) %>checked<% end %>>
+                    <label class="form-check-label" for="location<%=location.id %>"><%= location.name %></label>
+                  </div>
+                <% end %>
+                <div class="actions">
+                  <%= submit_tag("Set Geofences", :class => "btn btn-outline-success") %>
+                </div>
+              </div>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'Demote admin', user_role_path(user["id"]), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-outline-danger" %>
           </td>
         </tr>
       <% end %>
@@ -41,7 +58,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <%= form_tag("/users/create_admin", method: "POST") do |form|  %>
+        <%= form_tag("/users/create_admin", method: "POST") do |form| %>
           <div class="form-group">
             <label for="user[email]">Email</label>
             <%= text_field(:user, :email, class: "form-control") %>
@@ -54,12 +71,13 @@
 
           <div class="form-check">
             <label for="user[is_active]">
-              <input type="checkbox" class="form-check-input" name="user[is_active]" id="user_is_active"> Is active?
+              <input type="checkbox" class="form-check-input" name="user[is_active]" id="user_is_active"> Is
+              active?
             </label>
           </div>
 
           <div class="actions">
-            <%= submit_tag("Create", :class=>"btn btn-outline-primary") %>
+            <%= submit_tag("Create", :class => "btn btn-outline-primary") %>
           </div>
         <% end %>
       </div>
