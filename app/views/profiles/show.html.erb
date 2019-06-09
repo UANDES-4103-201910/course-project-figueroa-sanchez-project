@@ -1,9 +1,9 @@
 <%= javascript_include_tag 'post', 'data-turbolinks-track': 'reload' %>
 
-<div class="container">
+<div class="container-fluid">
   <p></p>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <div class="card mb-3" style="max-width: 540px;">
         <div class="row">
           <div class="col-md-4 text-center">
@@ -40,14 +40,16 @@
         </li>
       </ul>
     </div>
-    <div class="col-sm-8">
-      <div class="container justify-content-xl-center">
-        <div class="card">
-          <div class="card-body">
+    <div class="col-sm-5">
+      <div class="jumbotron jumbotron-fluid justify-content-xl-center">
+        <a class="btn btn-dark" data-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin-top: -100px;margin-left: 10px;">
+          New Post
+        </a>
+        <div class="collapse" id="collapseComment" style="margin-top: -30px">
+          <div class="card card-body">
             <%= render '/posts/form', post: @new_post %>
           </div>
         </div>
-        <br>
         <% if @posts.length > 0 %>
           <ul class="list-group ">
             <% @posts.each do |post| %>
@@ -55,7 +57,7 @@
                 <div class="card mb-3">
                 <div class="card-header">
                   <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-9">
                       <% if @profile.image.attached? %>
                         <%= image_tag(@profile.image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
                       <% else %>
@@ -65,7 +67,7 @@
                         <%= @profile.first_name %>
                       </a>
                     </div>
-                    <div class="col-md-2 text-center">
+                    <div class="col-md-3 text-center">
                       <small><%= post.created_at.to_date %></small>
                     </div>
                   </div>
@@ -148,6 +150,81 @@
             <h2>You have no posts yet</h2>
           </div>
         <% end %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="jumbotron">
+        <h5>Activity</h5>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="#shared-posts" id="shared-posts-tab" role="tab" data-toggle="tab" aria-controls="shared-posts" aria-selected="true">Shared</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#voted-posts" id="voted-posts-tab" role="tab" data-toggle="tab" aria-controls="voted-posts" aria-selected="false">Voted</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#followingposts" id="followingposts-tab" role="tab" data-toggle="tab" aria-controls="followingposts" aria-selected="false">Following</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="PostsTabContent">
+          <div class="tab-pane fade show active list-group" id="shared-posts" role="tabpanel" aria-label="shared-posts-tab">
+            shared posts
+          </div>
+          <div class="tab-pane fade list-group" id="voted-posts" role="tabpanel" aria-label="voted-posts-tab">
+            voted posts
+          </div>
+          <div class="tab-pane fade list-group" id="followingposts" role="tabpanel" aria-label="followingposts-tab">
+            <% if @following_posts.length > 0 %>
+              <% @following_posts.each do |post| %>
+                <a href="/posts/<%= post['id'] %>" class="list-group-item list-group-item-action">
+                  <div class="media-body">
+                    <div class="media mt-3">
+                      <% if post["author_image"].attached? %>
+                        <%= image_tag(post["author_image"], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                      <% else %>
+                        <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
+                      <% end %>
+                      <div class="media-body">
+                        <h5 class="mt-0"><%= post["title"] %></h5>
+                        <div class="row">
+                          <div class="col-md-10">
+                            <%= post["description"] %>
+                          </div>
+                          <div class="col-md-1">
+                            <% if post['solved'] %>
+                              <i class="fas fa-check fa-2x"></i>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                      <small><%= post['date'] %></small>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                      </div>
+                      <div class="col-md-2">
+                        <small>
+                          <%= post['votes']['up']%> <i class="fas fa-thumbs-up "></i>
+                        </small>
+                      </div>
+                      <div class="col-md-2">
+                        <small>
+                          <%= post['votes']['down'] %> <i class="fas fa-thumbs-down "></i>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              <% end %>
+            <% else %>
+              <p>
+              <h6>
+                This profile doesn't have any <strong>following posts</strong>.
+              </h6>
+              </p>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

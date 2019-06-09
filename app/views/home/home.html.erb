@@ -14,7 +14,7 @@
       </li>
       <% end %>
     </ul>
-    <div class="tab-content" i="homeTabContent">
+    <div class="tab-content" id="homeTabContent">
       <div class="tab-pane fade show active list-group" id="top20posts" role="tabpanel" aria-labelledby="top20posts-tab" >
         <% if @top_20_post %>
           <% @top_20_post.each do |post| %>
@@ -108,7 +108,7 @@
         <% else %>
           <p>
             <h5>
-              You don't have any<strong>following posts</strong>.
+              You don't have any <strong>following posts</strong>.
             </h5>
           </p>
 

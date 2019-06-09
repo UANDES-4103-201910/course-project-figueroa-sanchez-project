@@ -30,6 +30,14 @@ class ProfilesController < ApplicationController
     end
     @new_post = Post.new
     @new_comment = ""
+    @following_posts = Array.new
+    follow_post_current_user = FollowPost.all
+    if follow_post_current_user.length > 0
+      follow_post_first = follow_post_current_user.where(user_id: @user.id).first
+    end
+    if follow_post_first
+      @following_posts = follow_post_first.get_following_posts
+    end
   end
 
   # GET /profiles/new
