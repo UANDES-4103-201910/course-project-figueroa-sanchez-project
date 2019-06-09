@@ -4,32 +4,60 @@
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
       <ul>
-      <% post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
-  <div class="field">
+  <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :description %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= form.label :images %>
-    <%=  form.file_field :images, multiple: true %>
+    <%= form.file_field :images, multiple: true, class: "btn btn-dark" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :files %>
     <%= form.file_field :files, multiple: true %>
   </div>
 
-  <div class="actions">
+  <div class="form-group">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#location-modal">
+      Set location
+    </button>
+    <%= form.fields_for :post_locations do |post_locations_form| %>
+      <%= post_locations_form.hidden_field :lat %>
+      <%= post_locations_form.hidden_field :lng %>
+    <% end %>
+  </div>
+
+  <div class="form-group">
     <%= form.submit :class => "btn btn-dark" %>
   </div>
 <% end %>
+
+<div class="modal fade" id="location-modal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="height: 500px;width: 700px">
+      <div class="modal-header">
+        <h4 class="modal-title">Set post location</h4>
+        <div class="alert alert-danger" id="map-alert" style="display: none">You can not post in that location</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+      </div>
+      <div class="modal-body">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMbuU8iVUfQUrsrI5nR35yvLX3-glWSz0&language=en&callback=initMap"
+        async defer></script>

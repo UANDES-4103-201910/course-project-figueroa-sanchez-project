@@ -1,8 +1,9 @@
+<%= javascript_include_tag 'post', 'data-turbolinks-track': 'reload' %>
+
 <div class="container">
   <p></p>
   <div class="row">
     <div class="col-sm-4">
-
       <div class="card mb-3" style="max-width: 540px;">
         <div class="row">
           <div class="col-md-4 text-center">
@@ -40,29 +41,13 @@
       </ul>
     </div>
     <div class="col-sm-8">
-
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#create-post-modal">
-        New Post
-      </button>
-
-      <div class="modal fade" id="create-post-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <%= render '/posts/form', post: @new_post %>
-            </div>
+      <div class="container justify-content-xl-center">
+        <div class="card">
+          <div class="card-body">
+            <%= render '/posts/form', post: @new_post %>
           </div>
         </div>
-      </div>
-      <p></p>
-      <div class="container justify-content-xl-center">
+        <br>
         <% if @posts.length > 0 %>
           <ul class="list-group ">
             <% @posts.each do |post| %>
