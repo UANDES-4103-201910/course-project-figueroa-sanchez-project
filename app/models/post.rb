@@ -8,7 +8,10 @@ class Post < ApplicationRecord
   has_many :validations
   has_many :shared_posts
   has_many :follow_posts
+  has_one :post_location
+  has_one :location, through: :post_location
   validates :title, presence: true, length: { maximum: 50 }
+
 
   def self.get_posts_ordered_by_votes
     posts_with_validations = Validation.group(:post_id).count

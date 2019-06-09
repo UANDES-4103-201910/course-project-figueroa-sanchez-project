@@ -11,6 +11,7 @@ Rails.application.config.assets.precompile += %w( profiles.js )
 Rails.application.config.assets.precompile += %w( post.js )
 Rails.application.config.assets.precompile += %w( black_lists.js )
 Rails.application.config.assets.precompile += %w( dumpsters.js )
+Rails.application.config.assets.precompile += %w( admin_list.js )
 # Precompile additional assets.
 # application.js, application.scss, and all non-JS/CSS in the app/assets
 # folder are already added.

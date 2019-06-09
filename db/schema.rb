@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_02_193326) do
+ActiveRecord::Schema.define(version: 2019_06_08_151713) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -44,9 +44,10 @@ ActiveRecord::Schema.define(version: 2019_06_02_193326) do
 
   create_table "admin_locations", force: :cascade do |t|
     t.integer "user_id"
-    t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "location_id"
+    t.index ["location_id"], name: "index_admin_locations_on_location_id"
     t.index ["user_id"], name: "index_admin_locations_on_user_id"
   end
 
@@ -83,6 +84,22 @@ ActiveRecord::Schema.define(version: 2019_06_02_193326) do
     t.index ["user_id"], name: "index_follow_posts_on_user_id"
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "post_locations", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_post_locations_on_location_id"
+    t.index ["post_id"], name: "index_post_locations_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.integer "user_id"
     t.string "title"
@@ -95,9 +112,10 @@ ActiveRecord::Schema.define(version: 2019_06_02_193326) do
 
   create_table "profile_locations", force: :cascade do |t|
     t.integer "profile_id"
-    t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "location_id"
+    t.index ["location_id"], name: "index_profile_locations_on_location_id"
     t.index ["profile_id"], name: "index_profile_locations_on_profile_id"
   end
 
