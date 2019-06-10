@@ -11,7 +11,7 @@
               <% else %>
                 <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
               <% end %>
-              <a href="#">
+              <a href="/profiles/<%= @post['user_id'] %>">
                 <%= @post['user_first_name'] + ' ' + @post['user_last_name'] %>
               </a>
             </div>

@@ -90,7 +90,12 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      post = Post.where(id: params[:id])
+      if post.length > 0
+        @post = Post.find(params[:id])
+      else
+        rendeVis :template => '/error_pages/404', :layout => false, :status => :not_found
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

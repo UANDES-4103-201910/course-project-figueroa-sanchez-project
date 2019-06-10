@@ -101,15 +101,19 @@ class ProfilesController < ApplicationController
   end
 
   def new_comment
-    comment = Comment.create(post: Post.find_by_id(params[:current_post]) , user: current_user, comment: params[:new_comment])
+    comment = Comment.create(post: Post.find_by_id(params[:current_post]), user: current_user, comment: params[:new_comment])
     redirect_back(fallback_location: root_path)
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile
-      @profile = Profile.find(params[:id])
-
+      profile = Profile.where(id: params[:id])
+      if profile.length > 0
+        @profile = Profile.find(params[:id])
+      else
+        render :template => '/error_pages/404', :layout => false, :status => :not_found
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
