@@ -36,6 +36,7 @@
     <%= form.fields_for :post_locations do |post_locations_form| %>
       <%= post_locations_form.hidden_field :lat %>
       <%= post_locations_form.hidden_field :lng %>
+      <%= post_locations_form.hidden_field :location_id %>
     <% end %>
   </div>
 

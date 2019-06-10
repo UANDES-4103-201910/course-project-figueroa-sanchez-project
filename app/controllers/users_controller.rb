@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+
   def ban_user
     user_to_ban = User.find(params[:id])
     if not user_to_ban.is_active

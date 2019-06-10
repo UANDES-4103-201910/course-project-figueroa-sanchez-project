@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     new_profile_url
   end
 
+
   def get_profile
     if profile_available
       @current_profile = Profile.find_by_user_id(current_user.id)

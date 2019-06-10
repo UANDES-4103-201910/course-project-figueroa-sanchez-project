@@ -23,8 +23,8 @@ class Post < ApplicationRecord
     posts_ordered_by_votes
   end
 
-  def is_innapropiate?
-    report_count = Report.where(post_id: id).length
+  def is_inappropriate?
+    report_count = Report.where("created_at < ? AND post_id = ?",7.days.ago,id).length
     if report_count>=3
       true
     else

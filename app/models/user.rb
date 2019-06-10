@@ -34,6 +34,35 @@ class User < ApplicationRecord
     return normal_users, administrators, superadmin
   end
 
+
+  def is_suspended?
+    black_list = BlackList.find_by_user_id(id)
+    if black_list
+      if black_list.created_at > Time.now-1.week
+        true
+      else
+        false
+      end
+    end
+  end
+
+  def suspension_time
+    if self.is_suspended?
+      (BlackList.find_by_user_id(id).created_at + 1.week).to_date
+    end
+  end
+
+  def innapropiate_posts_count
+    posts = self.posts
+    count = 0
+    posts.each do |post|
+      if post.is_inappropriate?
+        count+=1
+      end
+    end
+    count
+  end
+
   def get_actual_photo
     user_profile_id = Profile.where(user_id: id).id
     @actual_profile_photo = ProfilePhoto.where(profile_id: user_profile_id)
@@ -58,6 +87,31 @@ class User < ApplicationRecord
     else
       false
     end
+  end
+
+  def black_list
+    if self.is_in_black_list?
+      self.is_active = false
+      return false
+    end
+    black_list = BlackList.new(user_id: id)
+    user_posts = self.posts
+    user_posts.each do |post|
+      if post.is_inappropriate?
+        if not post.is_in_dumpster?
+          Dumpster.create(post_id: post.id)
+        end
+      end
+    end
+    if black_list.save
+      true
+    else
+      false
+    end
+  end
+
+  def is_in_black_list?
+    BlackList.where(user_id:id).length > 0
   end
 
   def get_role

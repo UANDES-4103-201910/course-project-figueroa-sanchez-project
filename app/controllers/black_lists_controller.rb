@@ -41,20 +41,13 @@ class BlackListsController < ApplicationController
   # POST /black_lists.json
   def create
     user = User.find(params[:id])
-    @black_list = BlackList.new(user_id: user.id)
-    user_posts = user.posts
-    user_posts.each do |post|
-      if post.is_innapropiate?
-        if not post.is_in_dumpster?
-          Dumpster.create(post_id: post.id)
-        end
-      end
-    end
     respond_to do |format|
-      if @black_list.save
+      if user.is_in_black_list?
+        format.html {redirect_back(fallback_location: black_list_path); flash[:danger] = "User is already in the blacklist."}
+      elsif user.black_list
         format.html {redirect_back(fallback_location: black_list_path); flash[:success] = "User successfully blacklisted."}
       else
-        format.html {redirect_back(fallback_location: black_list_path); flash[:danger] = "User is already in the blacklist."}
+        format.html {redirect_back(fallback_location: black_list_path); flash[:danger] = "Error."}
       end
     end
 
