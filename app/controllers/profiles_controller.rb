@@ -30,21 +30,14 @@ class ProfilesController < ApplicationController
     end
     @new_post = Post.new
     @new_comment = ""
-    @following_posts = Array.new
     @shared_posts = Array.new
     @up_posts = Array.new
     @down_posts = Array.new
+    @user_comments = Comment.get_posts_by_comments(@profile.user_id)
 
     all_shared_posts = SharedPost.all
-    all_follow_posts = FollowPost.all
     all_voted_posts = Validation.all
 
-    if all_follow_posts.length > 0
-      follow_post_first = all_follow_posts.where(user_id: @user.id).first
-    end
-    if follow_post_first
-      @following_posts = follow_post_first.get_following_posts
-    end
 
     if all_shared_posts.length > 0
       shared_post_first = all_shared_posts.where(user_id: @user.id).first

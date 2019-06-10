@@ -166,7 +166,7 @@
             <a class="nav-link" href="#unliked-posts" id="unliked-posts-tab" role="tab" data-toggle="tab" aria-controls="unliked-posts" aria-selected="false">Unlike</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#followingposts" id="followingposts-tab" role="tab" data-toggle="tab" aria-controls="followingposts" aria-selected="false">Follow</a>
+            <a class="nav-link" href="#followingposts" id="followingposts-tab" role="tab" data-toggle="tab" aria-controls="followingposts" aria-selected="false">Comment</a>
           </li>
         </ul>
         <div class="tab-content" id="PostsTabContent">
@@ -324,44 +324,35 @@
             <% end %>
           </div>
           <div class="tab-pane fade list-group" id="followingposts" role="tabpanel" aria-label="followingposts-tab">
-            <% if @following_posts.length > 0 %>
-              <% @following_posts.each do |post| %>
-                <a href="/posts/<%= post['id'] %>" class="list-group-item list-group-item-action">
+            <% if @user_comments.length > 0 %>
+              <% @user_comments.each do |comm| %>
+                <a href="/posts/<%= comm['post_id'] %>" class="list-group-item list-group-item-action">
+                  <div class="media-header">
+                    <% if comm["author_image"].attached? %>
+                      <%= image_tag(comm["author_image"], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "80x80") %>
+                    <% else %>
+                      <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="80" width="80">
+                    <% end %>
+                    <%= comm["post_title"] %>
+                  </div>
                   <div class="media-body">
                     <div class="media mt-3">
-                      <% if post["author_image"].attached? %>
-                        <%= image_tag(post["author_image"], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
-                      <% else %>
-                        <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
-                      <% end %>
                       <div class="media-body">
-                        <h5 class="mt-0"><%= post["title"] %></h5>
                         <div class="row">
-                          <div class="col-md-10">
-                            <%= post["description"] %>
-                          </div>
-                          <div class="col-md-1">
-                            <% if post['solved'] %>
-                              <i class="fas fa-check fa-2x"></i>
+                          <div class="col-md-4">
+                            <% if comm["user_image"].attached? %>
+                              <%= image_tag(comm["user_image"], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                            <% else %>
+                              <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
                             <% end %>
+                          </div>
+                          <div class="col-md-8">
+                            <h6><%= comm["user_first_name"] + ' ' + comm["user_last_name"] %></h6>
+                            <%= comm["text"] %>
                           </div>
                         </div>
                       </div>
-                      <small><%= post['date'] %></small>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-8">
-                      </div>
-                      <div class="col-md-2">
-                        <small>
-                          <%= post['votes']['up']%> <i class="fas fa-thumbs-up "></i>
-                        </small>
-                      </div>
-                      <div class="col-md-2">
-                        <small>
-                          <%= post['votes']['down'] %> <i class="fas fa-thumbs-down "></i>
-                        </small>
-                      </div>
+                      <small><%= comm['date'] %></small>
                     </div>
                   </div>
                 </a>
@@ -369,7 +360,7 @@
             <% else %>
               <p>
               <h6>
-                This profile doesn't have any <strong>following posts</strong>.
+                This profile doesn't have any <strong>comments on other posts</strong>.
               </h6>
               </p>
             <% end %>
