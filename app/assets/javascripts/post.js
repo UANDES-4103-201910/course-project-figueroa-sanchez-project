@@ -52,8 +52,8 @@ function checkCoordinates(lat, lng) {
         success: function (data) {
             if (data["data"]) {
                 $("#map-alert").hide();
-                $("#post_lat").val(lat);
-                $("#post_lng").val(lng);
+                $("#post_post_locations_lat").val(lat);
+                $("#post_post_locations_lng").val(lng);
             } else {
                 $("#map-alert").show();
             }
