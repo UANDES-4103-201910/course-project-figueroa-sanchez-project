@@ -160,10 +160,13 @@
             <a class="nav-link active" href="#shared-posts" id="shared-posts-tab" role="tab" data-toggle="tab" aria-controls="shared-posts" aria-selected="true">Shared</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#voted-posts" id="voted-posts-tab" role="tab" data-toggle="tab" aria-controls="voted-posts" aria-selected="false">Voted</a>
+            <a class="nav-link" href="#liked-posts" id="liked-posts-tab" role="tab" data-toggle="tab" aria-controls="liked-posts" aria-selected="false">Like</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#followingposts" id="followingposts-tab" role="tab" data-toggle="tab" aria-controls="followingposts" aria-selected="false">Following</a>
+            <a class="nav-link" href="#unliked-posts" id="unliked-posts-tab" role="tab" data-toggle="tab" aria-controls="unliked-posts" aria-selected="false">Unlike</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#followingposts" id="followingposts-tab" role="tab" data-toggle="tab" aria-controls="followingposts" aria-selected="false">Follow</a>
           </li>
         </ul>
         <div class="tab-content" id="PostsTabContent">
@@ -218,8 +221,107 @@
               </p>
             <% end %>
           </div>
-          <div class="tab-pane fade list-group" id="voted-posts" role="tabpanel" aria-label="voted-posts-tab">
-            voted posts
+          <div class="tab-pane fade list-group" id="liked-posts" role="tabpanel" aria-label="liked-posts-tab">
+            <% if @up_posts.length > 0 %>
+              <% @up_posts.each do |post| %>
+                <a href="/posts/<%= post['id'] %>" class="list-group-item list-group-item-action">
+                  <div class="media-body">
+                    <div class="media mt-3">
+                      <% if post["author_image"].attached? %>
+                        <%= image_tag(post["author_image"], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                      <% else %>
+                        <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
+                      <% end %>
+                      <div class="media-body">
+                        <h5 class="mt-0"><%= post["title"] %></h5>
+                        <div class="row">
+                          <div class="col-md-10">
+                            <%= post["description"] %>
+                          </div>
+                          <div class="col-md-1">
+                            <% if post['solved'] %>
+                              <i class="fas fa-check fa-2x"></i>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                      <small><%= post['date'] %></small>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                      </div>
+                      <div class="col-md-2">
+                        <small>
+                          <%= post['votes']['up']%> <i class="fas fa-thumbs-up "></i>
+                        </small>
+                      </div>
+                      <div class="col-md-2">
+                        <small>
+                          <%= post['votes']['down'] %> <i class="fas fa-thumbs-down "></i>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              <% end %>
+            <% else %>
+              <p>
+              <h6>
+                This profile doesn't have any <strong>liked posts</strong>.
+              </h6>
+              </p>
+            <% end %>
+          </div>
+          <div class="tab-pane fade list-group" id="unliked-posts" role="tabpanel" aria-label="unliked-posts-tab">
+            <% if @down_posts.length > 0 %>
+              <% @down_posts.each do |post| %>
+                <a href="/posts/<%= post['id'] %>" class="list-group-item list-group-item-action">
+                  <div class="media-body">
+                    <div class="media mt-3">
+                      <% if post["author_image"].attached? %>
+                        <%= image_tag(post["author_image"], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                      <% else %>
+                        <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
+                      <% end %>
+                      <div class="media-body">
+                        <h5 class="mt-0"><%= post["title"] %></h5>
+                        <div class="row">
+                          <div class="col-md-10">
+                            <%= post["description"] %>
+                          </div>
+                          <div class="col-md-1">
+                            <% if post['solved'] %>
+                              <i class="fas fa-check fa-2x"></i>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                      <small><%= post['date'] %></small>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                      </div>
+                      <div class="col-md-2">
+                        <small>
+                          <%= post['votes']['up']%> <i class="fas fa-thumbs-up "></i>
+                        </small>
+                      </div>
+                      <div class="col-md-2">
+                        <small>
+                          <%= post['votes']['down'] %> <i class="fas fa-thumbs-down "></i>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              <% end %>
+            <% else %>
+              <p>
+              <h6>
+                This profile doesn't have any <strong>unliked posts</strong>.
+              </h6>
+              </p>
+            <% end %>
           </div>
           <div class="tab-pane fade list-group" id="followingposts" role="tabpanel" aria-label="followingposts-tab">
             <% if @following_posts.length > 0 %>
