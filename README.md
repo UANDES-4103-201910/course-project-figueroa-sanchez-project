@@ -14,3 +14,15 @@ Pending features
 -Tag user in comment
 -Edit comment in post
 
+To log in as normal user: 
+email: activeNormalUser1@gmail.com
+password: password1
+
+To log in as Admin:
+email = activeAdministrator1@gmail.com
+password= password9
+
+To log in as SuperAdmin:
+email = activeSuperAdministrator1@gmail.com
+password = password13
+
