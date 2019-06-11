@@ -41,9 +41,14 @@ class ReportsController < ApplicationController
     r_params[:post] = Post.find(params["post_id"])
     category = ReportCategory.find(r_params[:report_category].to_i)
     r_params[:report_category] = category
+    reported_user = User.find(r_params[:post].user_id)
+    reports_count = reported_user.innapropiate_posts_count
     @report = Report.new(r_params)
     respond_to do |format|
       if @report.save
+        if reports_count >= 2
+          bl = reported_user.black_list
+        end
         format.html {redirect_back(fallback_location: root_path); flash[:success] = "Post successfully reported"}
       else
         format.html {redirect_back(fallback_location: root_path); flash[:danger] = "Error reporting post"}
@@ -56,11 +61,11 @@ class ReportsController < ApplicationController
   def update
     respond_to do |format|
       if @report.update(report_params)
-        format.html { redirect_to @report, notice: 'Report was successfully updated.' }
-        format.json { render :show, status: :ok, location: @report }
+        format.html {redirect_to @report, notice: 'Report was successfully updated.'}
+        format.json {render :show, status: :ok, location: @report}
       else
-        format.html { render :edit }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @report.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -70,19 +75,20 @@ class ReportsController < ApplicationController
   def destroy
     @report.destroy
     respond_to do |format|
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html {redirect_to reports_url, notice: 'Report was successfully destroyed.'}
+      format.json {head :no_content}
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_report
-      @report = Report.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def report_params
-      params.require(:report).permit(:user, :post, :report_category, :comment)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_report
+    @report = Report.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def report_params
+    params.require(:report).permit(:user, :post, :report_category, :comment)
+  end
 end

@@ -8,16 +8,27 @@ class Users::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
 
-  # DELETE /resource/sign_out
-  def destroy
-    super
-    redirect_to login_path
+  # POST /resource/sign_in
+  def create
+    user = User.find_by_email(params[:user][:email])
+    if user
+      if not user.is_active
+        flash[:danger] = "This account has been banned"
+        root_path
+      elsif user.is_suspended?
+        flash[:danger] = "This account has been suspended until #{user.suspension_time}"
+        root_path
+      else
+        super
+      end
+    end
   end
+
+    # DELETE /resource/sign_out
+    # def destroy
+    #   super
+    # end
 
   # protected
 

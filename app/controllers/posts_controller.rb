@@ -16,6 +16,15 @@ class PostsController < ApplicationController
     $current_post = @post['id']
     @comments = Comment.get_post_comments(params[:id])
     @new_comment = Comment.new(user_id: current_user.id, post_id: params[:id])
+    location =  PostLocation.find_by_post_id(@post["id"])
+
+    if location
+      @latitude = location.latitude
+      @longitude = location.longitude
+      @has_location = true
+    else
+      @has_location = false
+    end
   end
 
   # GET /posts/new
@@ -31,14 +40,15 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     parameters = post_params
-    @post = Post.new(title: parameters[:title], description: parameters[:description], user_id:current_user.id)
+    @post = Post.new(title: parameters[:title], description: parameters[:description], user_id: current_user.id)
     latitude = post_params[:post_locations][:lat].to_f
     longitude = post_params[:post_locations][:lng].to_f
-
+    location_id = post_params[:post_locations][:location_id]
+    location = Location.find_by_location(location_id)
     respond_to do |format|
       if @post.save
-        if post_params[:post_locations][:lat] != "" and post_params[:post_locations][:lng]!= ""
-          @post_location = PostLocation.create!(latitude: latitude, longitude: longitude, post_id:@post.id)
+        if post_params[:post_locations][:lat] != "" and post_params[:post_locations][:lng] != ""
+          @post_location = PostLocation.create!(latitude: latitude, longitude: longitude, post_id: @post.id, location_id: location.id)
         end
         format.html {redirect_back(fallback_location: profile_path(@current_profile.id)); flash[:success] = 'Post created'}
       else
@@ -109,6 +119,6 @@ class PostsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def post_params
-    params.require(:post).permit(:title, :description, images: [], files: [], post_locations: [:lat, :lng])
+    params.require(:post).permit(:title, :description, images: [], files: [], post_locations: [:lat, :lng, :location_id])
   end
 end

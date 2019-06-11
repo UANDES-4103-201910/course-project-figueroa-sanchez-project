@@ -12,7 +12,6 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 <header>
-
   <div id="header" style="margin-bottom: 20px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="/">M.A.P.I.</a>
@@ -71,7 +70,7 @@
     </nav>
   </div>
 </header>
-<body id="page-container">
+<body >
 <div class="container">
   <% flash.each do |key, value| %>
     <% if key == "alert" %>
@@ -98,13 +97,17 @@
     <% end %>
 <% end %>
 </div>
-<p></p>
-<div id="content-wrap">
-  <%= yield %>
-</div>
+
+<%= yield %>
 </body>
-
-
-
-
+<footer>
+  <nav class="navbar navbar-expand-lg bg-dark justify-content-start">
+    <div class="nav-item">
+      <a class="nav-link text-white" href="https://www.termsofusegenerator.net/live.php?token=s9B028itsbDiaEJihqRdkGglV4jybayL">Acceptable Use Policy</a>
+    </div>
+    <div class="nav-item">
+      <a class="nav-link text-white" href="https://www.termsofservicegenerator.net/live.php?token=bpcIljuNtHae4K224ybkr5QjsUyCFjbv">Terms of Service</a>
+    </div>
+  </nav>
+</footer>
 </html>
