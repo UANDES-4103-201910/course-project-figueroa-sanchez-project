@@ -109,7 +109,7 @@
             <% if Profile.find_by_id(comment['user_profile_id']).image.attached? %>
               <%= image_tag(Profile.find_by_id(comment['user_profile_id']).image, :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
             <% else %>
-              <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" sizes="50x50">
+              <img src="https://i.stack.imgur.com/34AD2.jpg" class="avatar img-circle img-thumbnail" alt="avatar" height="60" width="60">
             <% end %>
             <div class="media-body">
               <a href="/profiles/<%= comment['user_profile_id'] %>">
@@ -123,7 +123,21 @@
       </li>
     <% end %>
     <div class="card card-body">
-      <%= render './comments/form', comment: @new_comment %>
+      <%= form_with(model: @new_comment, local: true) do |form| %>
+
+        <div class="form-group">
+          <%= form.label :comment %>
+          <%= form.text_area :comment, class: "form-control" %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :post_id, value: @post["id"] %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit :class=>"btn btn-dark" %>
+        </div>
+      <% end %>
 
     </div>
   </ul>
