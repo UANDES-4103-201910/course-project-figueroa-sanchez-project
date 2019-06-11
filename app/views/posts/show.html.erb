@@ -1,4 +1,4 @@
-<%= javascript_include_tag 'post.js' %>
+<%= javascript_include_tag 'post_view.js' %>
 <div class="container justify-content-xl-center">
   <ul class="list-group ">
     <li class="list-group-item">
@@ -29,6 +29,8 @@
             <div class="col-md-10">
               <h5 class="card-title"><%= @post['title'] %></h5>
               <% if @has_location %>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMbuU8iVUfQUrsrI5nR35yvLX3-glWSz0&language=en&callback=initMap"
+                        async defer></script>
                 <a data-toggle="modal" href="#show-location-modal" id="show-map" data-target="#show-location-modal"
                    data-lat="<%= @latitude %>" data-lng="<%= @longitude %>">
                   <small>Location</small>
@@ -135,10 +137,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
       </div>
       <div class="modal-body">
-        <div id="map-show"></div>
+        <div id="map"></div>
       </div>
     </div>
   </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMbuU8iVUfQUrsrI5nR35yvLX3-glWSz0&language=en&callback=initMap"
-        async defer></script>

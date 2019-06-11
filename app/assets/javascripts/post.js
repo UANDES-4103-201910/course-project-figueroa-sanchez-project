@@ -3,21 +3,16 @@ var markers = [];
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -33.447487, lng: -70.673676},
-        zoom: 10
-    });
-
-    showMap = new google.maps.Map(document.getElementById('map-show'), {
-        center: {lat: parseFloat($("#show-map").dataset.lat), lng: parseFloat($("#show-map").dataset.lat)},
-        zoom: 12
+        center: {lat: -33.406387, lng: -70.547424},
+        zoom: 13
     });
 
     map.addListener('click', function (e) {
         placeMarkerAndPanTo(e.latLng, map);
     });
 
-
 }
+
 
 function placeMarkerAndPanTo(latLng, map) {
     deleteMarkers();
@@ -45,6 +40,7 @@ function deleteMarkers() {
     $("#post_post_locations_lat").val("");
     $("#post_post_locations_lng").val("");
     $("#post_post_locations_location_id").val("");
+    $("#set-location-button").removeClass('btn-success').addClass('btn-outline-success').html("Set location");
     markers = [];
 }
 
@@ -63,6 +59,7 @@ function checkCoordinates(lat, lng) {
                 $("#post_post_locations_lat").val(lat);
                 $("#post_post_locations_lng").val(lng);
                 $("#post_post_locations_location_id").val(data["data"][0]["id"])
+                $("#set-location-button").removeClass('btn-outline-success').addClass('btn-success').html("Location established");
             } else {
                 $("#map-alert").show();
             }
