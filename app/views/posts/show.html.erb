@@ -56,7 +56,7 @@
                 <ul>
                   <% @post['images'].each do |image| %>
                     <li>
-                      <%= image_tag image %>
+                      <%= image_tag image.variant(resize: "500x500") %>
                     </li>
                   <% end %>
                 </ul>
