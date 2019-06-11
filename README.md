@@ -3,13 +3,14 @@ Ignacio José Figueroa Kocksch
 María Pía Sanchez Gutierrez
 
 
+Implemented features 
+All the required features named in the assignment were accomplished except for the pending ones
 
+Pending features
+-Edit post
+-Restrict access of normal users to administrative functions
+-Ajax calls for better UX
+-Admin direct mark post as innappropriate
+-Tag user in comment
+-Edit comment in post
 
-Postman requests:
-For the create and update requests, there is an example on the body of the request
-https://www.getpostman.com/collections/946e38de99857db72542
-
-# Faltaron
-Comment:
- - eddit comment in the post
- - tag user in comment
