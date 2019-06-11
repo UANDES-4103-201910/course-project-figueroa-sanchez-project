@@ -31,12 +31,14 @@ class Comment < ApplicationRecord
       user_comment["user_first_name"] = Profile.find(comm.user_id).first_name
       user_comment["user_last_name"] = Profile.find(comm.user_id).last_name
       user_comment["user_image"] = Profile.find(comm.user_id).image
-      user_comment['post_id'] = Post.find(comm.user_id).id
-      user_comment['post_title'] = Post.find(comm.user_id).title
-      user_comment['author_image'] = Profile.find_by_user_id(Post.find(comm.user_id).user_id).image
+      user_comment['post_id'] = Post.find(comm.post_id).id
+      user_comment['post_title'] = Post.find(comm.post_id).title
+      user_comment['author_image'] = Profile.find_by_user_id(Post.find(comm.post_id).user_id).image
       user_comment["text"] = comm.comment
       user_comment["date"] = comm.created_at.to_date
-      comments << user_comment
+      unless Post.find(comm.post_id).is_in_dumpster?
+        comments << user_comment
+      end
     end
     comments
 end

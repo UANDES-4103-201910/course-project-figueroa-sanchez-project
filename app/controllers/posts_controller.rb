@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1
-  # GET /posts/1.json
+  # GET /posts/1.jsCOSon
   def show
     @post = Post.get_post(params[:id])
     $current_post = @post['id']
@@ -97,9 +97,13 @@ class PostsController < ApplicationController
   def set_post
     post = Post.where(id: params[:id])
     if post.length > 0
-      @post = Post.find(params[:id])
+      if Post.find(params[:id]).is_in_dumpster?
+        render :template => '/error_pages/404', :layout => false, :status => :not_found
+      else
+        @post = Post.find(params[:id])
+      end
     else
-      rendeVis :template => '/error_pages/404', :layout => false, :status => :not_found
+      render :template => '/error_pages/404', :layout => false, :status => :not_found
     end
   end
 

@@ -18,7 +18,9 @@ class FollowPost < ApplicationRecord
         n_post["author_id"] = post.user_id
         n_post["author_image"] = Profile.find_by_user_id(n_post['author_id']).image
         n_post["votes"] = post.get_votes
-        posts << n_post
+        unless Post.find(n_post['id']).is_in_dumpster?
+          posts << n_post
+        end
       end
     end
     posts
