@@ -6,8 +6,8 @@ class FollowPost < ApplicationRecord
     f_posts = FollowPost.where(user_id: user)
     posts = Array.new
     if f_posts
-      profile = Profile.where(user_id: user).first
       f_posts.each do |f_post|
+        profile = Profile.where(user_id: f_post.user_id).first
         post = Post.where(id:f_post.post_id).first
         n_post = Hash.new
         n_post["id"] = post.id

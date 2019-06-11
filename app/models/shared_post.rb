@@ -6,8 +6,8 @@ class SharedPost < ApplicationRecord
     s_posts = SharedPost.where(user_id: user)
     posts = Array.new
     if s_posts
-      profile = Profile.where(user_id: user).first
       s_posts.each do |s_post|
+        profile = Profile.where(user_id: s_post.user_id).first
         post = Post.where(id:s_post.post_id).first
         n_post = Hash.new
         n_post["id"] = post.id

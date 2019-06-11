@@ -1,0 +1,13 @@
+ <%= form_with(model: search, local: true) do |form| %>
+    <div class="input-group">
+      <%= form.text_field :keywords, :class=>"form-control", :type=>"search", :placeholder=>"Search" %>
+      <div class="actions">
+        <%= form.submit "Search", :class=>"btn btn-dark my-2 my-sm-0"%>
+        <a href="/searches">
+          <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </a>
+      </div>
+    </div>
+  <% end %>

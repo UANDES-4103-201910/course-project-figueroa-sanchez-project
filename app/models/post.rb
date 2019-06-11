@@ -40,6 +40,93 @@ class Post < ApplicationRecord
     end
   end
 
+  def self.get_post_by_word(keyword)
+    posts = Array.new
+    all_posts = Post.all
+    posts_by_title = all_posts.where("title LIKE ?", "%#{keyword}%")
+    posts_by_description = all_posts.where("description LIKE ?", "%#{keyword}%")
+    if posts_by_title
+      posts_by_title.each do |post|
+        profile = Profile.where(user_id: post.user_id).first
+        n_post = Hash.new
+        n_post["id"] = post.id
+        n_post["title"] = post.title
+        n_post["description"] = post.description
+        n_post["date"] = post.created_at
+        n_post["author_name"] = profile.first_name + " " + profile.last_name
+        n_post["author_id"] = post.user_id
+        n_post["author_image"] = Profile.find_by_user_id(n_post['author_id']).image
+        n_post["votes"] = post.get_votes
+        unless Post.find(n_post['id']).is_in_dumpster?
+          posts << n_post
+        end
+      end
+    end
+    if posts_by_description
+      posts_by_description.each do |post|
+        profile = Profile.where(user_id: post.user_id).first
+        n_post = Hash.new
+        n_post["id"] = post.id
+        n_post["title"] = post.title
+        n_post["description"] = post.description
+        n_post["date"] = post.created_at
+        n_post["author_name"] = profile.first_name + " " + profile.last_name
+        n_post["author_id"] = post.user_id
+        n_post["author_image"] = Profile.find_by_user_id(n_post['author_id']).image
+        n_post["votes"] = post.get_votes
+        unless Post.find(n_post['id']).is_in_dumpster?
+          posts << n_post
+        end
+      end
+    end
+    posts = posts & posts
+    posts
+  end
+
+  def self.get_post_by_author(keyword)
+    posts = Array.new
+    all_profiles = Profile.all
+    first_name_profile = all_profiles.where("first_name LIKE ?", "%#{keyword}%")
+    last_name_profile = all_profiles.where("first_name LIKE ?", "%#{keyword}%")
+    profiles = Array.new
+
+    if first_name_profile
+      first_name_profile.each do |profile|
+        profiles << profile.user_id
+      end
+    end
+
+    if last_name_profile
+      last_name_profile.each do |profile|
+        profiles << profile.user_id
+      end
+    end
+
+    if profiles.length > 0
+      profiles = profiles & profiles
+      profiles.each do |id|
+        a_posts = Post.where(user_id: id)
+        a_posts.each do |post|
+          profile = Profile.where(user_id: post.user_id).first
+          n_post = Hash.new
+          n_post["id"] = post.id
+          n_post["title"] = post.title
+          n_post["description"] = post.description
+          n_post["date"] = post.created_at
+          n_post["author_name"] = profile.first_name + " " + profile.last_name
+          n_post["author_id"] = post.user_id
+          n_post["author_image"] = Profile.find_by_user_id(n_post['author_id']).image
+          n_post["votes"] = post.get_votes
+          unless Post.find(n_post['id']).is_in_dumpster?
+            posts << n_post
+          end
+        end
+      end
+    end
+    posts.uniq
+    posts
+  end
+
   def self.get_posts_votes
     posts = Post.all
     validations = Validation.group(:post_id).sum(:vote)

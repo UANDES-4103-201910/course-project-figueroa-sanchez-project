@@ -21,17 +21,19 @@ class HomeController < ApplicationController
     if all_posts
       all_posts.each do |post|
         profile = Profile.where(user_id: post.user_id).first
-        n_post = Hash.new
-        n_post["id"] = post.id
-        n_post["title"] = post.title
-        n_post["description"] = post.description
-        n_post["date"] = post.created_at
-        n_post["author_name"] = profile.first_name + " " + profile.last_name
-        n_post["author_id"] = post.user_id
-        n_post["author_image"] = Profile.find_by_user_id(n_post['author_id']).image
-        n_post["solved"] = post.solved
-        n_post["votes"] = post.get_votes
-        @top_20_post << n_post
+        unless Post.find(post.id).is_in_dumpster?
+          n_post = Hash.new
+          n_post["id"] = post.id
+          n_post["title"] = post.title
+          n_post["description"] = post.description
+          n_post["date"] = post.created_at
+          n_post["author_name"] = profile.first_name + " " + profile.last_name
+          n_post["author_id"] = post.user_id
+          n_post["author_image"] = Profile.find_by_user_id(n_post['author_id']).image
+          n_post["solved"] = post.solved
+          n_post["votes"] = post.get_votes
+          @top_20_post << n_post
+        end
       end
     else
       @top_20_post = nil

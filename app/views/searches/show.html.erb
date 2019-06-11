@@ -1,12 +1,192 @@
-<div class="jumbotron">
-  <h1>Search Results</h1>
-  <% if @profiles.present? %>
-    <%= @profiles.each do |profile| %>
-      <a href="/profile/<%= profile.id %>"> <%= profile.first_name + " " + profile.last_name %> </a>
-    <% end %>
-  <% else %>
-    <h5> No users found</h5>
-  <% end %>
+<div class="container">
+
+  <div class="jumbotron justify-center">
+    <h2>Advanced Search</h2>
+    <%= render 'form', search: @new_search %>
+  </div>
+
+  <div class="jumbotron">
+    <h2>Search Results for "<%=@search.keywords %>"</h2>
+    <ul class="nav nav-tabs" id="searchTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="#users-by-name" id="users-by-name-tab" role="tab" data-toggle="tab" aria-controls="users-by-name" aria-selected="true">Users by Name</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#users-by-loc" id="users-by-loc-tab" role="tab" data-toggle="tab" aria-controls="users-by-loc" aria-selected="false">Users by Location</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#posts-by-word" id="posts-by-word-tab" role="tab" data-toggle="tab" aria-controls="posts-by-word" aria-selected="false">Posts by Word</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#posts-by-author" id="posts-by-author-tab" role="tab" data-toggle="tab" aria-controls="posts-by-author" aria-selected="false">Posts by Author</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="searchTabContent">
+      <div class="tab-pane fade show active list-group" id="users-by-name" role="tabpanel" aria-labelledby="users-by-name-tab" >
+        <% if @users_by_name.length > 0 %>
+          <ul class="list-group ">
+            <% @users_by_name.each do |profile| %>
+              <li class="list-group-item">
+                <div class="card mb-3">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <a href="/profiles/<%= profile['id'] %>"><%= profile['name']  %></a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>Profiles not found</p>
+        <% end %>
+      </div>
+      <div class="tab-pane fade list-group" id="users-by-loc" role="tabpanel" aria-labelledby="users-by-loc-tab" >
+        <% if @users_by_location.length > 0 %>
+          <ul class="list-group ">
+            <% @users_by_location.each do |profile| %>
+              <li class="list-group-item">
+                <div class="card mb-3">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <a href="/profiles/<%= profile['id'] %>"><%= profile['name']  %></a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>Profiles not found</p>
+        <% end %>
+      </div>
+      <div class="tab-pane fade list-group" id="posts-by-word" role="tabpanel" aria-labelledby="posts-by-word-tab" >
+        <% if @posts_by_word.length > 0 %>
+          <ul class="list-group ">
+            <% @posts_by_word.each do |post| %>
+              <li class="list-group-item">
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <% if post['author_image'].attached? %>
+                          <%= image_tag(post['author_image'], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                        <% else %>
+                          <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" class="post-user-image">
+                        <% end %>
+                        <a href="/profiles/<%=post['author_id'] %>">
+                          <%= post['author_name'] %>
+                        </a>
+                      </div>
+                      <div class="col-md-3 text-center">
+                        <small><%= post['date'] %></small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body text-left">
+                    <div class="row">
+                      <div class="col-md-10">
+                        <a href="<%= post_path(post['id']) %>" class="btn-outline-warning"><h5 class="card-title"><%= post['title'] %></h5></a>
+                      </div>
+                      <div class="col-md-2 text-center">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <p class="card-text"><%= post['description'] %></p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-sm-8">
+                      </div>
+                      <div class="col-sm-4 text-right">
+                        <%= post['votes']["up"] %>
+                        <a class="btn">
+                          <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
+                        </a>
+                        <%= post['votes']["down"] %>
+                        <a class="btn">
+                          <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </ul>
+            <% end %>
+        <% else %>
+          <p>Posts not found</p>
+        <% end %>
+      </div>
+      <div class="tab-pane fade list-group" id="posts-by-author" role="tabpanel" aria-labelledby="posts-by-author-tab" >
+        <% if @posts_by_author.length > 0 %>
+          <ul class="list-group ">
+            <% @posts_by_author.each do |post| %>
+              <li class="list-group-item">
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <% if post['author_image'].attached? %>
+                          <%= image_tag(post['author_image'], :class => "avatar img-circle img-thumbnail", :alt => "avatar", :size => "50x50") %>
+                        <% else %>
+                          <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar" class="post-user-image">
+                        <% end %>
+                        <a href="/profiles/<%=post['author_id'] %>">
+                          <%= post['author_name'] %>
+                        </a>
+                      </div>
+                      <div class="col-md-3 text-center">
+                        <small><%= post['date'] %></small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body text-left">
+                    <div class="row">
+                      <div class="col-md-10">
+                        <a href="<%= post_path(post['id']) %>" class="btn-outline-warning"><h5 class="card-title"><%= post['title'] %></h5></a>
+                      </div>
+                      <div class="col-md-2 text-center">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <p class="card-text"><%= post['description'] %></p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-sm-8">
+                      </div>
+                      <div class="col-sm-4 text-right">
+                        <%= post['votes']["up"] %>
+                        <a class="btn">
+                          <i class="fas fa-thumbs-up fa-hand-thumbs-up "></i>
+                        </a>
+                        <%= post['votes']["down"] %>
+                        <a class="btn">
+                          <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              </ul>
+            <% end %>
+        <% else %>
+          <p>Posts not found</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
 
 </div>
 

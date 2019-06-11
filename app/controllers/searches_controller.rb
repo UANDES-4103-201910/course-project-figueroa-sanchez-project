@@ -21,7 +21,12 @@ class SearchesController < ApplicationController
 
   def show
     @search = Search.find(params[:id])
-    @profiles = @search.profiles
+    @new_search = Search.new
+    @users_by_name = Profile.get_profile_by_name(@search.keywords)
+    @users_by_location = Profile.get_profile_by_location(@search.keywords)
+    @posts_by_word = Post.get_post_by_word(@search.keywords)
+    @posts_by_author = Post.get_post_by_author(@search.keywords)
+
   end
 
 
