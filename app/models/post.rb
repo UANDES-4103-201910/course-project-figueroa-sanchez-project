@@ -25,7 +25,7 @@ class Post < ApplicationRecord
 
   def is_inappropriate?
     report_count = Report.where("created_at < ? AND post_id = ?",7.days.ago,id).length
-    if report_count>=3
+    if report_count >= 3
       true
     else
       false
@@ -33,7 +33,7 @@ class Post < ApplicationRecord
   end
 
   def is_in_dumpster?
-    if Dumpster.where(post_id: id).length>0
+    if Dumpster.where(post_id: id).length > 0
       true
     else
       false
@@ -87,7 +87,7 @@ class Post < ApplicationRecord
     posts = Array.new
     all_profiles = Profile.all
     first_name_profile = all_profiles.where("first_name LIKE ?", "%#{keyword}%")
-    last_name_profile = all_profiles.where("first_name LIKE ?", "%#{keyword}%")
+    last_name_profile = all_profiles.where("last_name LIKE ?", "%#{keyword}%")
     profiles = Array.new
 
     if first_name_profile
@@ -123,7 +123,7 @@ class Post < ApplicationRecord
         end
       end
     end
-    posts.uniq
+    posts = posts & posts
     posts
   end
 
