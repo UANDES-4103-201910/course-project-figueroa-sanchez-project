@@ -122,13 +122,23 @@
                             <% end %>
                           </ul>
                           <div class="card card-body">
-                              <textarea id="comment_post<%= post.id %>" name="<%= @new_comment %>">
-                                <%= @new_comment %>
-                              </textarea>
-                            <a class="btn btn-dark" id="new_comment<%= post.id %>"
-                               href="<%= new_comment_prof_path(:current_post => post.id, :comment => @new_comment) %>">
-                              New Comment
-                            </a>
+                            <% if current_user %>
+                              <%= form_with(model: @new_comment, local: true) do |form| %>
+
+                                <div class="form-group">
+                                  <%= form.label :comment %>
+                                  <%= form.text_area :comment, class: "form-control" %>
+                                </div>
+
+                                <div class="field">
+                                  <%= form.hidden_field :post_id, value: post["id"] %>
+                                </div>
+
+                                <div class="actions">
+                                  <%= form.submit :class=>"btn btn-dark" %>
+                                </div>
+                              <% end %>
+                          <% end %>
                           </div>
                         </div>
                       </div>

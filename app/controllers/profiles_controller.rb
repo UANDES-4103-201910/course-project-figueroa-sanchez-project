@@ -29,7 +29,9 @@ class ProfilesController < ApplicationController
       @comments[post.id] = Comment.get_post_comments(post.id)
     end
     @new_post = Post.new
-    @new_comment = ""
+    if current_user
+      @new_comment = Comment.new(user_id: current_user.id)
+    end
     @shared_posts = Array.new
     @up_posts = Array.new
     @down_posts = Array.new

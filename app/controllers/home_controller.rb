@@ -12,7 +12,7 @@ class HomeController < ApplicationController
 
     @top_20_post = Array.new
     @following_posts = Array.new
-    if follow_post_current_user.length > 0
+    if follow_post_current_user.length > 0 and not current_user.nil?
       follow_post_first = follow_post_current_user.where(user_id: current_user.id).first
     end
     if follow_post_first

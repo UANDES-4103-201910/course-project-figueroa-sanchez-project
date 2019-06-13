@@ -15,7 +15,9 @@ class PostsController < ApplicationController
     @post = Post.get_post(params[:id])
     $current_post = @post['id']
     @comments = Comment.get_post_comments(params[:id])
-    @new_comment = Comment.new(user_id: current_user.id, post_id: params[:id])
+    if current_user
+      @new_comment = Comment.new(user_id: current_user.id, post_id: params[:id])
+    end
     location =  PostLocation.find_by_post_id(@post["id"])
 
     if location
@@ -40,7 +42,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     parameters = post_params
-    @post = Post.new(title: parameters[:title], description: parameters[:description], user_id: current_user.id)
+    @post = Post.new(title: parameters[:title], description: parameters[:description], user_id: current_user.id, images: parameters[:images], files: parameters[:files])
     latitude = post_params[:post_locations][:lat].to_f
     longitude = post_params[:post_locations][:lng].to_f
     location_id = post_params[:post_locations][:location_id]
