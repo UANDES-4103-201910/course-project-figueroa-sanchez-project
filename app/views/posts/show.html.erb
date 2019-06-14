@@ -69,8 +69,10 @@
                 <ul>
                   <% @post['files'].each do |file| %>
                     <li>
+                      <% i = 1 %>
                       <%= link_to "../" + url_for(file) do %>
-                        This is a file
+                        <%= file.name + ' ' + i.to_s %>
+                        <% i = i + 1 %>
                       <% end %>
                     </li>
                   <% end %>
@@ -94,6 +96,13 @@
               <a class="btn" id="vote-down" href="<%= vote_down_path %>">
                 <i class="fas fa-thumbs-down fa-hand-thumbs-down"></i>
               </a>
+              <% if current_user %>
+                <% if current_user.id == @post['user_id'] %>
+                  <a class="btn" id="post-solved" href="<%= post_solved_path %>" data-toggle="tooltip" data-placement="bottom" title="Solve">
+                    <i class="fas fa-check"></i>
+                  </a>
+                <% end %>
+              <% end %>
               <a class="btn" id="follow-post" href="<%= followpost_path %>" data-toggle="tooltip" data-placement="bottom" title="Follow">
                 <i class="fas fa-angle-double-right"></i>
               </a>

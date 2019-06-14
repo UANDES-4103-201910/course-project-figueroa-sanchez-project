@@ -83,6 +83,10 @@ class PostsController < ApplicationController
     end
   end
 
+  def post_solved
+    redirect_back(fallback_location: root_path)
+  end
+
   def vote_up
     validation = Validation.create(post: Post.find_by_id($current_post), user: current_user, vote: 1)
     redirect_back(fallback_location: root_path)
