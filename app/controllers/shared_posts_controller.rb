@@ -12,6 +12,7 @@ class SharedPostsController < ApplicationController
   # GET /shared_posts/1
   # GET /shared_posts/1.json
   def show
+    redirect_to post_path(id: @follow_post.post)
   end
 
   # GET /shared_posts/new

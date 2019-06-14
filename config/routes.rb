@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'posts/vote_up', to: 'posts#vote_up', as: 'vote_up'
   get 'posts/vote_down', to: 'posts#vote_down', as: 'vote_down'
   get 'posts/follow_post', to: 'posts#follow_post', as: 'followpost'
+  get 'posts/shared_post', to: 'posts#shared_post', as: 'sharedpost'
   get 'destroy/searcher'
   devise_for :users, controllers: {omniauth_callbacks: 'callbacks',
                                    :registrations => "users/registrations",

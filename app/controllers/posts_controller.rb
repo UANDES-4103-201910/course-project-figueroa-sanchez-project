@@ -98,6 +98,11 @@ class PostsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def shared_post
+    shared_post = SharedPost.create(post: Post.find_by_id($current_post), user: current_user)
+    redirect_back(fallback_location: root_path)
+  end
+
   def new_comment
     comment = Comment.create(post: Post.find_by_id($current_post), user: current_user, comment: $new_comment)
     redirect_back(fallback_location: root_path)
