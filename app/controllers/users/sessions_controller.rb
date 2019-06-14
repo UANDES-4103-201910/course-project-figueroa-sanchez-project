@@ -11,7 +11,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    user = User.find_by_email(params[:user][:email])
+    user = User.find_by_email(params["user"]["email"].downcase)
     if user
       if not user.is_active
         flash[:danger] = "This account has been banned"
@@ -22,6 +22,8 @@ class Users::SessionsController < Devise::SessionsController
       else
         super
       end
+    else
+      super
     end
   end
 
